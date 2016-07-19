@@ -1,0 +1,38 @@
+﻿<UserControl
+    x:Class="FourSeafile.UserControls.Progress"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:uc="using:FourSeafile.UserControls">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Height="50"
+              VerticalAlignment="Bottom"
+              RenderTransformOrigin="0,0">
+            <Grid.RenderTransform>
+                <RotateTransform Angle="-90" />
+            </Grid.RenderTransform>
+            <TextBlock Text="{Binding Stats}"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold">
+            </TextBlock>
+        </Grid>
+        <uc:GridView ItemsSource="{Binding NetworkOperations}" DesiredItemSize="720" Grid.Column="1">
+            <uc:GridView.ItemsPanel>
+                <DataTemplate>
+                    <StackPanel />
+                </DataTemplate>
+            </uc:GridView.ItemsPanel>
+            <uc:GridView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="12">
+                        <TextBlock Text="{Binding Text}" TextTrimming="CharacterEllipsis" />
+                        <ProgressBar Value="{Binding Value}" Maximum="{Binding Total}" />
+                    </StackPanel>
+                </DataTemplate>
+            </uc:GridView.ItemTemplate>
+        </uc:GridView>
+    </Grid>
+</UserControl>

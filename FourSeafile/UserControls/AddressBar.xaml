@@ -1,0 +1,13 @@
+﻿<UserControl
+    x:Class="FourSeafile.UserControls.AddressBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    MinHeight="50" MaxHeight="50">
+    <Grid x:Name="Root" Tapped="Grid_Tapped">
+        <Rectangle Fill="White" Opacity="0.8" />
+        <TextBox x:Name="TextBox" Text="{Binding Address}" VerticalAlignment="Center" Visibility="Collapsed" LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp" />
+        <ScrollViewer x:Name="ButtonsViewer" HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Auto" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled">
+            <StackPanel x:Name="ButtonsPanel" Orientation="Horizontal" />
+        </ScrollViewer>
+    </Grid>
+</UserControl>

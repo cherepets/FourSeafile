@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:Class="FourSeafile.UserControls.UserInfo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Ellipse Width="38" Height="38" Margin="6">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="{Binding Avatar}" />
+            </Ellipse.Fill>
+        </Ellipse>
+        <TextBlock Text="{Binding Nickname}" Margin="0, 12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" MaxWidth="310" />
+    </Grid>
+</UserControl>
