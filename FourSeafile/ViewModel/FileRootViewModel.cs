@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using System;
 
 namespace FourSeafile.ViewModel
 {
@@ -36,6 +35,9 @@ namespace FourSeafile.ViewModel
 
         public static FileRootViewModel Current => _current ?? (_current = new FileRootViewModel());
         private static FileRootViewModel _current;
+
+        public static void Reset()
+            => _current = null;
 
         protected override async Task LoadAsync()
         {

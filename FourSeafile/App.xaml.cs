@@ -14,6 +14,7 @@ using Windows.UI.Core;
 using Windows.UI.Popups;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using FourSeafile.ViewModel;
 
 namespace FourSeafile
 {
@@ -95,7 +96,9 @@ namespace FourSeafile
         public static void Logout()
         {
             Seafile = null;
+            LibCache = null;
             Credentials.Clear();
+            FileRootViewModel.Reset();
             Frame.Navigate(typeof(AuthPage), null);
         }
         

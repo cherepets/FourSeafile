@@ -1,4 +1,5 @@
 ﻿using FourSeafile.UserControls;
+using SeafClient;
 using SeafClient.Types;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,17 @@ namespace FourSeafile.ViewModel
                 if (result == ContentDialogResult.Primary)
                 {
                     var password = dialog.Password;
-                    await App.Seafile.DecryptLibrary(_lib, password.ToCharArray());
+                    if (!string.IsNullOrEmpty(password))
+                    {
+                        try
+                        {
+                            await App.Seafile.DecryptLibrary(_lib, password.ToCharArray());
+                        }
+                        catch (SeafException exception)
+                        {
+                            App.HandleException(exception);
+                        }
+                    }
                 }
             }
             var dirs = await App.Seafile.ListDirectory(_lib);

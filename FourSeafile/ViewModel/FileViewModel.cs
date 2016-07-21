@@ -3,7 +3,6 @@ using SeafClient.Types;
 using System.Threading.Tasks;
 using System.Linq;
 using FourSeafile.Extensions;
-using System;
 
 namespace FourSeafile.ViewModel
 {
