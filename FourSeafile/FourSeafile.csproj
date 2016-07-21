@@ -257,6 +257,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SeafClient\SeafClient\SeafClient.csproj">
+      <Project>{d3b1e98f-16cd-4a9f-86c9-e6292117619e}</Project>
+      <Name>SeafClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FourSeafile.Component\FourSeafile.Component.csproj">
       <Project>{7f818b1e-2632-40ca-a25a-fea2450cf5bf}</Project>
       <Name>FourSeafile.Component</Name>

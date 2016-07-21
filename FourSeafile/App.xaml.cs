@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Media;
 using System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using System.Net.Http;
+using System.Runtime.InteropServices;
 
 namespace FourSeafile
 {
@@ -62,12 +64,13 @@ namespace FourSeafile
             if (dispatcher == null) return;
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
             {
+                var isNetworkRestriction = e is HttpRequestException && e.InnerException is COMException;
                 var dialog = new MessageDialog(
-                    e.Message,
-                    e.GetType().Name)
-                    .WithCommand("Close")
-                    .SetCancelCommandIndex(0)
+                    isNetworkRestriction ? "Connection cannot be established due network restriction" : e.Message,
+                    isNetworkRestriction ? "Error" : e.GetType().Name)
                     .SetDefaultCommandIndex(0);
+                if (Platform.IsDesktop)
+                    dialog.WithCommand("Close");
                 if (e.StackTrace != null)
                     dialog.WithCommand("StackTrace", () => ShowStackTrace(e));
                 if (e.InnerException != null)
@@ -79,9 +82,9 @@ namespace FourSeafile
         private static async void ShowStackTrace(Exception e)
         {
             var dialog = new MessageDialog(e.StackTrace, e.GetType().Name)
-                .WithCommand("Close")
-                .SetCancelCommandIndex(0)
                 .SetDefaultCommandIndex(0);
+            if (Platform.IsDesktop)
+                dialog.WithCommand("Close");
             if (e.Message != null)
                 dialog.WithCommand("Message", () => ShowExceptionMessage(e));
             if (e.InnerException != null)

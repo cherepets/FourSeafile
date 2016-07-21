@@ -22,6 +22,7 @@
             </uc:GridView.ItemTemplate>
         </uc:GridView>
         <CommandBar Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentBrush}">
+            <AppBarButton Label="Refresh" Icon="Refresh" Click="Refresh_Click" />
             <AppBarButton Label="Go up" Icon="Up" IsEnabled="{Binding CanGoUp}" Click="Up_Click" />
             <AppBarButton Label="Upload" Icon="Add" IsEnabled="{Binding CanUpload}" Click="Upload_Click" />
         </CommandBar>

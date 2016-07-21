@@ -13,6 +13,8 @@ namespace FourSeafile
         public static event EventHandler<NavigationEventArgs> NavigatedTo;
         public static event EventHandler<SeafSession> TokenReceived;
 
+        private const string RegisterLink = "accounts/register/";
+
         public AuthPage()
         {
             InitializeComponent();
@@ -67,6 +69,11 @@ namespace FourSeafile
         {
             var host = GetHost();
             if (string.IsNullOrWhiteSpace(host)) return;
+            if (!host.EndsWith(RegisterLink))
+            {
+                if (!host.EndsWith("/")) host += "/";
+                host += RegisterLink;
+            }
             await Launcher.LaunchUriAsync(new Uri(host, UriKind.Absolute));
         }
 

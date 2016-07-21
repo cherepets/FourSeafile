@@ -16,7 +16,6 @@ namespace FourSeafile
         public MainPage()
         {
             InitializeComponent();
-            DataContext = new RootViewModel();
         }
 
         private bool _isCompact = true;
@@ -24,7 +23,10 @@ namespace FourSeafile
         private string _state;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
-            => NavigatedTo?.Invoke(this, e);
+        {
+            NavigatedTo?.Invoke(this, e);
+            DataContext = new RootViewModel();
+        }
 
         private async void AddressBar_UserInput(object sender, string e)
         {

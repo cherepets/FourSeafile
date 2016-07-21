@@ -33,6 +33,9 @@ namespace FourSeafile.UserControls
             }
         }
 
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
+            => await BrowserVM.SelectedFolder.RefreshContentAsync();
+
         private void Up_Click(object sender, RoutedEventArgs e)
             => BrowserVM.GoUp();
 

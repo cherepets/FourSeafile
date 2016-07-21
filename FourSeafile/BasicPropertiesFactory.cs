@@ -9,6 +9,8 @@ namespace FourSeafile
     {
         public static async Task<BasicProperties> GetAsync()
         {
+            // Empty file required to obtain BasicProperties
+            // There's no other way because the class is sealed and has no public constructors
             var empty = await Package.Current.InstalledLocation.GetFileAsync(".empty");
             return await empty.GetBasicPropertiesAsync();
         }
