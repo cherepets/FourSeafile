@@ -1,7 +1,10 @@
-﻿using SeafClient.Types;
+﻿using FourSeafile.UserControls;
+using SeafClient.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace FourSeafile.ViewModel
 {
@@ -39,6 +42,16 @@ namespace FourSeafile.ViewModel
 
         protected override async Task LoadAsync()
         {
+            if (_lib.Encrypted)
+            {
+                var dialog = new PasswordInputDialog();
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    var password = dialog.Password;
+                    await App.Seafile.DecryptLibrary(_lib, password.ToCharArray());
+                }
+            }
             var dirs = await App.Seafile.ListDirectory(_lib);
             Files = dirs.Select(f => (FileViewModelBase)new FileViewModel(this, f)).ToList();
         }

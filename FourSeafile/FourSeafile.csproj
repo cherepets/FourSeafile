@@ -137,6 +137,9 @@
       <DependentUpon>FileIconView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\GridView.cs" />
+    <Compile Include="UserControls\PasswordInputDialog.xaml.cs">
+      <DependentUpon>PasswordInputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Progress.xaml.cs">
       <DependentUpon>Progress.xaml</DependentUpon>
     </Compile>
@@ -244,6 +247,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\FileIconView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PasswordInputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
