@@ -75,7 +75,7 @@ namespace FourSeafile.ViewModel
             }
             catch (UnauthorizedAccessException)
             {
-                await Warning.ShowAsync("Cannot access file: " + file.Name);
+                await Warning.ShowAsync($"{Localization.CantAccess}: {file.Name}");
                 return;
             }
             try
@@ -86,7 +86,7 @@ namespace FourSeafile.ViewModel
             }
             catch
             {
-                await Warning.ShowAsync("Cannot upload file: " + file.Name);
+                await Warning.ShowAsync($"{ Localization.CantUpload}: {file.Name}");
             }
         }
 

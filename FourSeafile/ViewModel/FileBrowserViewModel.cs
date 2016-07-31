@@ -1,4 +1,5 @@
 ﻿using FourSeafile.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,15 +31,23 @@ namespace FourSeafile.ViewModel
             }
             set
             {
+                if (SelectedFolder != null)
+                    SelectedFolder.PropertyLoadFailed -= SelectedFolder_PropertyLoadFailed;
                 _selectedFolder = value;
+                SelectedFolder.PropertyLoadFailed += SelectedFolder_PropertyLoadFailed;
                 if (!History.Any() || History.Peek() != value) History.Push(value);
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(Address));
                 UpdateBackHandler();
             }
         }
-
         private FileViewModelBase _selectedFolder;
+
+        private void SelectedFolder_PropertyLoadFailed(object sender, Exception e)
+        {
+            App.HandleException(e);
+            GoBack();
+        }
 
         public string Address => SelectedFolder?.LibId != null && App.LibCache != null
             ? $"{App.LibCache[SelectedFolder.LibId].Name}{LocalAddress}"

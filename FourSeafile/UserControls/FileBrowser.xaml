@@ -22,12 +22,12 @@
             </uc:GridView.ItemTemplate>
         </uc:GridView>
         <CommandBar Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentBrush}">
-            <AppBarButton Label="Refresh" Icon="Refresh" Click="Refresh_Click" />
-            <AppBarButton Label="Go up" Icon="Up" IsEnabled="{Binding CanGoUp}" Click="Up_Click" />
-            <AppBarButton Label="Upload" Icon="Add" IsEnabled="{Binding CanUpload}" Click="Upload_Click" />
+            <AppBarButton x:Uid="RefeshButton" Icon="Refresh" Click="Refresh_Click" />
+            <AppBarButton x:Uid="GoUpButton" Icon="Up" IsEnabled="{Binding CanGoUp}" Click="Up_Click" />
+            <AppBarButton x:Uid="UploadButton" Icon="Add" IsEnabled="{Binding CanUpload}" Click="Upload_Click" />
         </CommandBar>
         <Grid Grid.RowSpan="2" Background="{ThemeResource SystemControlDisabledListMediumBrush}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}">
-            <ProgressRing Width="128" Height="128" IsActive="True" 
+            <ProgressRing Width="96" Height="96" IsActive="True" 
                       HorizontalAlignment="Center" VerticalAlignment="Center" 
                       Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" />
         </Grid>

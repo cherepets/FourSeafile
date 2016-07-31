@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="FourSeafile.MainPage"
+    x:Class="FourSeafile.Pages.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:uc="using:FourSeafile.UserControls"
@@ -33,7 +33,7 @@
             <ListViewItem Grid.Row="3" Tapped="Logout_Tapped">
                 <StackPanel Orientation="Horizontal" Margin="-12, 0">
                     <FontIcon Glyph="" FontFamily="Segoe MDL2 Assets" Width="50" Height="48"/>
-                    <TextBlock Text="Log out" VerticalAlignment="Center" />
+                    <TextBlock x:Uid="LogoutBlock" VerticalAlignment="Center" />
                 </StackPanel>
             </ListViewItem>
         </Grid>

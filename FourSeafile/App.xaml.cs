@@ -1,20 +1,21 @@
 ﻿using FourSeafile.Extensions;
+using FourSeafile.Pages;
+using FourSeafile.ViewModel;
 using SeafClient;
 using SeafClient.Types;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using System;
-using Windows.UI.Core;
-using Windows.UI.Popups;
-using System.Net.Http;
-using System.Runtime.InteropServices;
-using FourSeafile.ViewModel;
 
 namespace FourSeafile
 {
@@ -48,30 +49,29 @@ namespace FourSeafile
         private static void Current_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-            if (e.Message == "Unspecified error\r\n" || e.Exception?.Message == null) return;
             HandleException(e.Exception);
         }
 
         private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             e.SetObserved();
-            if (e.Exception?.Message == null) return;
             HandleException(e.Exception);
         }
 
         private static async void ShowExceptionMessage(Exception e)
         {
+            if (e.Message.StartsWith("UnspecifiedError") || e?.Message == null) return;
             var dispatcher = Window.Current?.CoreWindow?.Dispatcher;
             if (dispatcher == null) return;
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
             {
                 var isNetworkRestriction = e is HttpRequestException && e.InnerException is COMException;
                 var dialog = new MessageDialog(
-                    isNetworkRestriction ? "Connection cannot be established due network restriction" : e.Message,
-                    isNetworkRestriction ? "Error" : e.GetType().Name)
+                    isNetworkRestriction ? Localization.ConnectionError : e.Message,
+                    isNetworkRestriction ? Localization.Error : e.GetType().Name)
                     .SetDefaultCommandIndex(0);
                 if (Platform.IsDesktop)
-                    dialog.WithCommand("Close");
+                    dialog.WithCommand(Localization.Close);
                 if (e.StackTrace != null)
                     dialog.WithCommand("StackTrace", () => ShowStackTrace(e));
                 if (e.InnerException != null)
@@ -85,7 +85,7 @@ namespace FourSeafile
             var dialog = new MessageDialog(e.StackTrace, e.GetType().Name)
                 .SetDefaultCommandIndex(0);
             if (Platform.IsDesktop)
-                dialog.WithCommand("Close");
+                dialog.WithCommand(Localization.Close);
             if (e.Message != null)
                 dialog.WithCommand("Message", () => ShowExceptionMessage(e));
             if (e.InnerException != null)
@@ -115,7 +115,7 @@ namespace FourSeafile
             {
                 if (Frame.Content == null)
                     Frame.Navigate(typeof(LoadingPage), e.Arguments);
-                if (Credentials.Exists())
+                if (Credentials.Exists() && (!Settings.Local.UseWindowsHello || await WindowsHello.VerifyAsync()))
                 {
                     Seafile = await Credentials.AuthenticateAsync();
                     if (Seafile != null) Frame.Navigate(typeof(MainPage), e.Arguments);

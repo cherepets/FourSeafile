@@ -14,7 +14,11 @@ namespace FourSeafile.ViewModel
         public string Path => _entry.Path;
         public override bool CanUpload => IsFolder;
         public override FileViewModelBase Parent { get; }
-        public override string Info => _entry.Timestamp.ToString();
+        public override string Info => _entry.Timestamp.Year > 1970
+            ? _entry.Timestamp.ToString()
+            : _entry.Size > 0
+                ? _entry.Size.ToSizeString()
+                : string.Empty;
         public override IconViewModel Icon
         {
             get

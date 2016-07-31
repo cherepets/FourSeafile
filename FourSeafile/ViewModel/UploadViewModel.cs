@@ -45,7 +45,7 @@ namespace FourSeafile.ViewModel
             Parent = parent;
             _oper = oper;
             StatusUpdater();
-            Text = $"{file.Name} is uploading";
+            Text = $"{file.Name} {Localization.IsUploading}";
             Total = 100;
         }
 

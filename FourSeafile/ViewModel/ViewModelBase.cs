@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -6,7 +7,30 @@ namespace FourSeafile.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        public event EventHandler<Exception> PropertyLoadFailed;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public LoadingState State
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                _state = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsLoaded));
+                OnPropertyChanged(nameof(IsLoading));
+                OnPropertyChanged(nameof(IsNotLoaded));
+            }
+        }
         private LoadingState _state;
+
+        public bool IsLoaded => State == LoadingState.Loaded;
+        public bool IsLoading => State == LoadingState.Loading;
+        public bool IsNotLoaded => State == LoadingState.NotLoaded;
+
         private object _lock = new object();
 
         protected async void OnPropertyGet()
@@ -19,69 +43,21 @@ namespace FourSeafile.ViewModel
                     case LoadingState.Loading:
                         return;
                     case LoadingState.NotLoaded:
-                        _state = LoadingState.Loading;
+                        State = LoadingState.Loading;
                         break;
                 }
             }
             try
             {
-                IsNotLoaded = false;
-                IsLoading = true;
                 await LoadAsync();
+                State = LoadingState.Loaded;
             }
-            finally
+            catch (Exception ex)
             {
-                IsLoading = false;
-                IsLoaded = true;
+                State = LoadingState.NotLoaded;
+                PropertyLoadFailed?.Invoke(this, ex);
             }
         }
-
-        public bool IsLoading
-        {
-            get
-            {
-                OnPropertyGet();
-                return _isLoading;
-            }
-            private set
-            {
-                _isLoading = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _isLoading;
-
-        public bool IsLoaded
-        {
-            get
-            {
-                OnPropertyGet();
-                return _isLoaded;
-            }
-            private set
-            {
-                _isLoaded = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _isLoaded;
-
-        public bool IsNotLoaded
-        {
-            get
-            {
-                OnPropertyGet();
-                return _isNotLoaded;
-            }
-            private set
-            {
-                _isNotLoaded = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _isNotLoaded = true;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

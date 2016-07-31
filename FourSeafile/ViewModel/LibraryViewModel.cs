@@ -43,28 +43,42 @@ namespace FourSeafile.ViewModel
 
         protected override async Task LoadAsync()
         {
+            var allowed = true;
             if (_lib.Encrypted)
             {
                 var dialog = new PasswordInputDialog();
-                var result = await dialog.ShowAsync();
-                if (result == ContentDialogResult.Primary)
+                allowed = false;
+                await dialog.ShowAsync();
+                Exception exception = null;
+                if (dialog.Result)
                 {
                     var password = dialog.Password;
                     if (!string.IsNullOrEmpty(password))
                     {
                         try
                         {
-                            await App.Seafile.DecryptLibrary(_lib, password.ToCharArray());
+                            allowed = await App.Seafile.DecryptLibrary(_lib, password.ToCharArray());
                         }
-                        catch (SeafException exception)
+                        catch (SeafException ex)
                         {
-                            App.HandleException(exception);
+                            exception = ex;
                         }
                     }
                 }
+                if (!allowed)
+                    throw (exception == null
+                        ? new UnauthorizedAccessException(Localization.CantDecrypt)
+                        : new UnauthorizedAccessException(Localization.CantDecrypt, exception));
             }
-            var dirs = await App.Seafile.ListDirectory(_lib);
-            Files = dirs.Select(f => (FileViewModelBase)new FileViewModel(this, f)).ToList();
+            if (allowed)
+            {
+                var dirs = await App.Seafile.ListDirectory(_lib);
+                Files = dirs.Select(f => (FileViewModelBase)new FileViewModel(this, f)).ToList();
+            }
+            else
+            {
+                Files = new List<FileViewModelBase>();
+            }
         }
     }
 }

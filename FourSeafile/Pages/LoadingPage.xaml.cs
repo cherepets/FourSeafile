@@ -1,4 +1,4 @@
-﻿namespace FourSeafile
+﻿namespace FourSeafile.Pages
 {
     public sealed partial class LoadingPage
     {

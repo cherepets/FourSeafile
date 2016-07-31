@@ -24,16 +24,13 @@
         <!-- Context Menu-->
         <FlyoutBase.AttachedFlyout>
             <MenuFlyout>
-                <MenuFlyoutItem x:Name="OpenButton"
+                <MenuFlyoutItem x:Name="OpenButton" x:Uid="OpenButton"
                                 Visibility="{Binding IsFile, Converter={StaticResource BoolToVisibility}}"
-                                Text="Open"
                                 Click="OpenButton_Click"/>
-                <MenuFlyoutItem x:Name="DownloadButton"
+                <MenuFlyoutItem x:Name="DownloadButton" x:Uid="DownloadButton"
                                 Visibility="{Binding IsFile, Converter={StaticResource BoolToVisibility}}"
-                                Text="Download"
                                 Click="DownloadButton_Click"/>
-                <MenuFlyoutItem x:Name="DeleteButton"
-                                Text="Delete"
+                <MenuFlyoutItem x:Name="DeleteButton" x:Uid="DeleteButton"
                                 Click="DeleteButton_Click"/>
             </MenuFlyout>
         </FlyoutBase.AttachedFlyout>

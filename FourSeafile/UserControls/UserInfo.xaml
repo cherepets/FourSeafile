@@ -1,17 +1,35 @@
 ﻿<UserControl
     x:Class="FourSeafile.UserControls.UserInfo"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:FourToolkit.Charts">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Ellipse Width="38" Height="38" Margin="6">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="{Binding Avatar}" />
             </Ellipse.Fill>
         </Ellipse>
-        <TextBlock Text="{Binding Nickname}" Margin="0, 12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" MaxWidth="310" />
+        <TextBlock Text="{Binding Nickname}" Margin="0,12,12,12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" MaxWidth="310" />
+        <Grid Width="100" Height="100" Grid.Column="1" Grid.Row="1" Margin="12">
+            <c:DoughnutChart ItemsSource="{Binding UsageData}">
+                <c:DoughnutChart.ItemTemplate>
+                    <DataTemplate>
+                        <c:DoughnutChartItem Value="{Binding Part}" Color="{Binding Color}"/>
+                    </DataTemplate>
+                </c:DoughnutChart.ItemTemplate>
+            </c:DoughnutChart>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="{Binding UsedSpace}" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" FontWeight="Bold" HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding TotalSpace}" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" FontWeight="Bold" HorizontalAlignment="Center" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

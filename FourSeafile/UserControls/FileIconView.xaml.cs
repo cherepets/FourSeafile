@@ -61,7 +61,7 @@ namespace FourSeafile.UserControls
         {
             var fvm = FileVM as FileViewModel;
             var file = fvm.AsStorageFile();
-            if (await Confirmation.ShowAsync($"Delete {file.Name}?"))
+            if (await Confirmation.ShowAsync($"{Localization.Delete} {file.Name}?"))
             {
                 await file.DeleteAsync();
                 await fvm.Parent.RefreshContentAsync();

@@ -45,7 +45,7 @@ namespace FourSeafile.ViewModel
             Parent = parent;
             _oper = oper;
             StatusUpdater();
-            Text = $"{_oper.ResultFile.Name} is downloading";
+            Text = $"{_oper.ResultFile.Name} {Localization.IsDownloading}";
             Total = 1;
         }
 
@@ -53,8 +53,11 @@ namespace FourSeafile.ViewModel
         {
             while (true)
             {
-                Value = _oper.Progress.BytesReceived;
-                Total = _oper.Progress.TotalBytesToReceive;
+                if (_oper.Progress.TotalBytesToReceive > 0)
+                {
+                    Value = _oper.Progress.BytesReceived;
+                    Total = _oper.Progress.TotalBytesToReceive;
+                }
                 if (_oper.Progress.Status == BackgroundTransferStatus.Canceled
                     || _oper.Progress.Status == BackgroundTransferStatus.Completed
                     || _oper.Progress.Status == BackgroundTransferStatus.Error)

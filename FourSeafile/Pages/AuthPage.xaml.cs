@@ -6,9 +6,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
-namespace FourSeafile
+namespace FourSeafile.Pages
 {
-    public sealed partial class AuthPage : Page
+    public sealed partial class AuthPage
     {
         public static event EventHandler<NavigationEventArgs> NavigatedTo;
         public static event EventHandler<SeafSession> TokenReceived;
@@ -18,8 +18,8 @@ namespace FourSeafile
         public AuthPage()
         {
             InitializeComponent();
-            var host = Settings.Current.Host;
-            var login = Settings.Current.Login;
+            var host = Settings.Encrypted.Host;
+            var login = Settings.Encrypted.Login;
             if (!string.IsNullOrWhiteSpace(host))
                 HostBox.Text = host;
             if (!string.IsNullOrWhiteSpace(login))
@@ -50,6 +50,7 @@ namespace FourSeafile
                     var session = await SeafSession.Establish(new Uri(host, UriKind.Absolute), login, password.ToCharArray());
                     if (session != null)
                     {
+                        await EnableWindowsHello();
                         TokenReceived?.Invoke(this, session);
                         Credentials.Store(host, login, password);
                     }
@@ -62,6 +63,15 @@ namespace FourSeafile
             finally
             {
                 IsEnabled = true;
+            }
+        }
+
+        private async System.Threading.Tasks.Task EnableWindowsHello()
+        {
+            if (WindowsHelloBox.IsChecked ?? false)
+            {
+                var res = await WindowsHello.VerifyAsync();
+                Settings.Local.UseWindowsHello = res;
             }
         }
 

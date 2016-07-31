@@ -17,7 +17,8 @@ namespace FourSeafile
             var dict = new Dictionary<string, object>();
             var values = _container.Values;
             foreach (var value in values)
-                dict.Add(value.Key, Crypt.Decrypt(value.Value as byte[], _deviceId));
+                if (value.Value is byte[])
+                    dict.Add(value.Key, Crypt.Decrypt(value.Value as byte[], _deviceId));
             return dict;
         }
 

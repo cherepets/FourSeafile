@@ -10,9 +10,9 @@ namespace FourSeafile
         public static async Task<bool> ShowAsync(string s)
         {
             var res = false;
-            await new MessageDialog(s, "Confirmation")
-                .WithCommand("Yes", () => res = true)
-                .WithCommand("No", () => res = false)
+            await new MessageDialog(s, Localization.Confirmation)
+                .WithCommand(Localization.Yes, () => res = true)
+                .WithCommand(Localization.No, () => res = false)
                 .SetDefaultCommandIndex(0)
                 .SetCancelCommandIndex(1)
                 .ShowAsync();

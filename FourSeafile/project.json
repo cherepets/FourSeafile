@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "FourToolkit.Charts": "1.2.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
     "SeafClient": "1.0.1"
   },

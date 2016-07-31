@@ -1,30 +1,50 @@
 ﻿namespace FourSeafile
 {
-    public class Settings : SettingsBase
+    public class Settings
     {
-        public string Host
+        public class EncryptedSettings : SettingsBase
         {
-            get { return GetProperty<string>(); }
-            set { SetProperty(value); }
+            public string Host
+            {
+                get { return GetProperty<string>(); }
+                set { SetProperty(value); }
+            }
+
+            public string Login
+            {
+                get { return GetProperty<string>(); }
+                set { SetProperty(value); }
+            }
+
+            public string Password
+            {
+                get { return GetProperty<string>(); }
+                set { SetProperty(value); }
+            }
+
+            public EncryptedSettings()
+            {
+                SettingsProvider = new EncryptedSettingsProvider();
+            }
         }
 
-        public string Login
+        public class LocalSettings : SettingsBase
         {
-            get { return GetProperty<string>(); }
-            set { SetProperty(value); }
+            public bool UseWindowsHello
+            {
+                get { return GetProperty<bool>(); }
+                set { SetProperty(value); }
+            }
+
+            public LocalSettings()
+            {
+                SettingsProvider = new ApplicationDataSettingsProvider(ApplicationDataContainerType.Local);
+            }
         }
 
-        public string Password
-        {
-            get { return GetProperty<string>(); }
-            set { SetProperty(value); }
-        }
+        public static EncryptedSettings Encrypted { get; } = new EncryptedSettings();
+        public static LocalSettings Local { get; } = new LocalSettings();
 
-        public static Settings Current { get; } = new Settings();
-
-        public Settings()
-        {
-            SettingsProvider = new EncryptedSettingsProvider(); 
-        }
+        private Settings() { }
     }
 }

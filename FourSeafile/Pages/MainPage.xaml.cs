@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
-namespace FourSeafile
+namespace FourSeafile.Pages
 {
     public sealed partial class MainPage
     {
