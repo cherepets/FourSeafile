@@ -50,7 +50,7 @@ namespace FourSeafile.ViewModel
         }
 
         public string Address => SelectedFolder?.LibId != null && App.LibCache != null
-            ? $"{App.LibCache[SelectedFolder.LibId].Name}{LocalAddress}"
+            ? $"/{App.LibCache[SelectedFolder.LibId].Name}{LocalAddress}"
             : string.Empty;
 
         private string LocalAddress

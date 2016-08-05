@@ -28,7 +28,7 @@ namespace FourSeafile.Component
 
         public DateTimeOffset DateCreated => DateTime.UtcNow;
 
-        public string FileType => Name.Split('.').LastOrDefault();
+        public string FileType => $".{Name.Split('.').LastOrDefault()}";
 
         public string Name => Implementation.Name;
 

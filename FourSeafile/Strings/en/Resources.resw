@@ -117,100 +117,109 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="a" xml:space="preserve">
-    <value>Пароль:</value>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Отмена</value>
+    <value>Cancel</value>
   </data>
   <data name="CantAccess" xml:space="preserve">
-    <value>Нет доступа к файлу</value>
+    <value>Cannot access file</value>
   </data>
   <data name="CantDecrypt" xml:space="preserve">
-    <value>Не удалось расшифровать библиотеку</value>
+    <value>Cannot decrypt library</value>
   </data>
   <data name="CantUpload" xml:space="preserve">
-    <value>Не удалось загрузить файл</value>
+    <value>Cannot upload file</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Закрыть</value>
+    <value>Close</value>
   </data>
   <data name="Confirmation" xml:space="preserve">
-    <value>Подтверждение</value>
+    <value>Confirmation</value>
   </data>
   <data name="ConnectionError" xml:space="preserve">
-    <value>Соединение не может быть установлено из-за ограничений сети</value>
+    <value>Connection cannot be established due network restriction</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Удалить</value>
+    <value>Delete</value>
   </data>
   <data name="DeleteButton.Text" xml:space="preserve">
-    <value>Удалить</value>
+    <value>Delete</value>
   </data>
   <data name="DownloadButton.Text" xml:space="preserve">
-    <value>Скачать</value>
+    <value>Download</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Ошибка</value>
+    <value>Error</value>
   </data>
   <data name="GoUpButton.Label" xml:space="preserve">
-    <value>Наверх</value>
-  </data>
-  <data name="HostBlock.Text" xml:space="preserve">
-    <value>Сервер</value>
-  </data>
-  <data name="IsDownloading" xml:space="preserve">
-    <value>скачивается</value>
-  </data>
-  <data name="IsUploading" xml:space="preserve">
-    <value>загружается</value>
-  </data>
-  <data name="LoginBlock.Text" xml:space="preserve">
-    <value>Email или Логин</value>
-  </data>
-  <data name="LoginButton.Content" xml:space="preserve">
-    <value>Войти</value>
-  </data>
-  <data name="LogoutBlock.Text" xml:space="preserve">
-    <value>Выйти</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>Нет</value>
-  </data>
-  <data name="Ok" xml:space="preserve">
-    <value>Далее</value>
-  </data>
-  <data name="OpenButton.Text" xml:space="preserve">
-    <value>Открыть</value>
-  </data>
-  <data name="PasswordBlock.Text" xml:space="preserve">
-    <value>Пароль</value>
-  </data>
-  <data name="RefeshButton.Label" xml:space="preserve">
-    <value>Обновить</value>
-  </data>
-  <data name="SignUpButton.Content" xml:space="preserve">
-    <value>Зарегистироваться</value>
-  </data>
-  <data name="UploadButton.Label" xml:space="preserve">
-    <value>Загрузить</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Да</value>
+    <value>Go up</value>
   </data>
   <data name="HelloAuth" xml:space="preserve">
-    <value>Войдите с Windows Hello</value>
+    <value>Authenticate with Windows Hello</value>
   </data>
   <data name="HelloError" xml:space="preserve">
-    <value>Отказано во входе</value>
+    <value>Authentication failed</value>
   </data>
   <data name="HelloRetry" xml:space="preserve">
-    <value>Ошибка. Попробуйте ещё раз</value>
+    <value>Error. Try again</value>
   </data>
   <data name="HelloUnavialable" xml:space="preserve">
-    <value>Windows Hello недоступен</value>
+    <value>Windows Hello is not available</value>
+  </data>
+  <data name="HostBlock.Text" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="IsDownloading" xml:space="preserve">
+    <value>is downloading</value>
+  </data>
+  <data name="IsUploading" xml:space="preserve">
+    <value>is uploading</value>
+  </data>
+  <data name="LoginBlock.Text" xml:space="preserve">
+    <value>Email or Username</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="LogoutBlock.Text" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OpenButton.Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="PasswordBlock.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RefeshButton.Label" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SaveButton.Label" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveLocalButton.Label" xml:space="preserve">
+    <value>Save locally</value>
+  </data>
+  <data name="SignUpButton.Content" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="UploadButton.Label" xml:space="preserve">
+    <value>Upload</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Предупреждение</value>
+    <value>Warning</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

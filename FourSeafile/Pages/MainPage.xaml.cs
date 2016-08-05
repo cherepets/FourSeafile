@@ -24,8 +24,12 @@ namespace FourSeafile.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var forceReload = false;
+            if (e.Parameter is bool)
+                forceReload = (bool)e.Parameter;
             NavigatedTo?.Invoke(this, e);
-            DataContext = new RootViewModel();
+            if (DataContext == null || forceReload)
+                DataContext = new RootViewModel();
         }
 
         private async void AddressBar_UserInput(object sender, string e)

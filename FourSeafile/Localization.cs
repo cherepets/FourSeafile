@@ -1,10 +1,15 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
+using Windows.Globalization;
 
 namespace FourSeafile
 {
     public static class Localization
     {
+        public static string AreYouSure => Get();
         public static string Cancel => Get();
         public static string CantAccess => Get();
         public static string CantDecrypt => Get();
@@ -25,6 +30,20 @@ namespace FourSeafile
         public static string Ok => Get();
         public static string Warning => Get();
         public static string Yes => Get();
+        
+        public static void Apply()
+        {
+            var locales = ApplicationLanguages.ManifestLanguages;
+            var culture = CultureInfo.CurrentCulture;
+            foreach (var locale in locales)
+            {
+                if (culture.Name.Contains(locale))
+                {
+                    ApplicationLanguages.PrimaryLanguageOverride = locale;
+                    return;
+                }
+            }
+        }
 
         private static ResourceLoader _loader = new ResourceLoader();
         private static string Get([CallerMemberName] string property = null)

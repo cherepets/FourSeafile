@@ -1,6 +1,8 @@
 ﻿using FourSeafile.Extensions;
+using FourSeafile.Viewers;
 using FourSeafile.ViewModel;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -19,7 +21,7 @@ namespace FourSeafile.UserControls
             InitializeComponent();
         }
         
-        private async void FileIconView_Click(object sender, EventArgs e)
+        private void FileIconView_Click(object sender, EventArgs e)
         {
             var vm = (sender as FrameworkElement)?.DataContext as FileViewModelBase;
             if (vm == null) return;
@@ -28,13 +30,26 @@ namespace FourSeafile.UserControls
             else
             {
                 var fvm = vm as FileViewModel;
-                var file = await fvm.DownloadAsync(ApplicationData.Current.TemporaryFolder);
-                file?.LaunchAsync();
+                if (fvm == null) return;
+                var viewer = ViewerFactory.Get(fvm);
+                viewer.Open(fvm);
+                viewer.NavigateTo();
             }
         }
 
         private async void Refresh_Click(object sender, RoutedEventArgs e)
-            => await BrowserVM.SelectedFolder.RefreshContentAsync();
+        {
+            try
+            {
+                var task = ApplicationData.Current.TemporaryFolder.ClearAsync();
+                await BrowserVM.SelectedFolder.RefreshContentAsync();
+                await task;
+            }
+            catch (Exception ex)
+            {
+                App.HandleException(ex);
+            }
+        }
 
         private void Up_Click(object sender, RoutedEventArgs e)
             => BrowserVM.GoUp();
@@ -45,7 +60,10 @@ namespace FourSeafile.UserControls
             picker.FileTypeFilter.Add("*");
             var file = await picker.PickSingleFileAsync();
             if (file == null) return;
+            StatusBar.Text = $"{file.Name} {Localization.IsUploading}...";
             BrowserVM.Upload(file);
+            await Task.Delay(1000);
+            StatusBar.Text = null;
         }
 
         private async void GridView_Drop(object sender, DragEventArgs e)

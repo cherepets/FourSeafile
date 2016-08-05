@@ -54,7 +54,8 @@ namespace FourSeafile.UserControls
             var fvm = FileVM as FileViewModel;
             var file = fvm.AsStorageFile();
             var folder = await PickFolderAsync(file.FileType);
-            await file.CopyAsync(folder, file.Name, NameCollisionOption.ReplaceExisting);
+            if (folder != null)
+                await file.CopyAsync(folder, file.Name, NameCollisionOption.ReplaceExisting);
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -72,8 +73,13 @@ namespace FourSeafile.UserControls
         private static bool CheckKey(KeyRoutedEventArgs e)
             => e.Key == VirtualKey.Enter || e.Key == VirtualKey.Space;
 
-        private void OnClick()
-            => Click?.Invoke(this, null);
+        private async void OnClick()
+        {
+            StatusBar.Text = $"{FileVM.Name} {Localization.IsDownloading}...";
+            Click?.Invoke(this, null);
+            await Task.Delay(1000);
+            StatusBar.Text = null;
+        }
 
         private static async Task<StorageFolder> PickFolderAsync(string ext)
         {
@@ -81,9 +87,8 @@ namespace FourSeafile.UserControls
             {
                 SuggestedStartLocation = PickerLocationId.Downloads
             };
-            picker.FileTypeFilter.Add($".{ext}");
+            picker.FileTypeFilter.Add(ext);
             return await picker.PickSingleFolderAsync();
         }
-
     }
 }

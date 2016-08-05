@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Bist du sicher?</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Stornieren</value>
   </data>
@@ -181,7 +184,7 @@
     <value>Anmelden</value>
   </data>
   <data name="LogoutBlock.Text" xml:space="preserve">
-    <value>Aausloggen</value>
+    <value>Abmelden</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Keine</value>
@@ -200,6 +203,12 @@
   </data>
   <data name="RefeshButton.Label" xml:space="preserve">
     <value>Auffrischen</value>
+  </data>
+  <data name="SaveButton.Label" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="SaveLocalButton.Label" xml:space="preserve">
+    <value>Lokal speichern</value>
   </data>
   <data name="SignUpButton.Content" xml:space="preserve">
     <value>Registrieren</value>

@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -35,11 +36,10 @@ namespace FourSeafile
             AuthPage.TokenReceived += (s, e) =>
             {
                 Seafile = e;
-                Frame.Navigate(typeof(MainPage), null);
+                Frame.Navigate(typeof(MainPage), true);
             };
             Current.UnhandledException += Current_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
         }
 
         public static new App Current => Application.Current as App;
@@ -104,7 +104,9 @@ namespace FourSeafile
         
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Localization.Apply();
             ChangeNameBarColor();
+            var clearTask = ApplicationData.Current.TemporaryFolder.ClearAsync();
             Frame = Window.Current.Content as Frame;
             if (Frame == null)
             {
@@ -125,6 +127,7 @@ namespace FourSeafile
                     Frame.Navigate(typeof(AuthPage), e.Arguments);
                 Window.Current.Activate();
             }
+            await clearTask;
         }
         private void ChangeNameBarColor()
         {

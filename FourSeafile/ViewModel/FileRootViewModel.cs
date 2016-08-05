@@ -41,9 +41,9 @@ namespace FourSeafile.ViewModel
 
         protected override async Task LoadAsync()
         {
-            var libs = await App.Seafile.ListLibraries();
-            App.LibCache = libs.Distinct(l => l.Id).ToDictionary(l => l.Id, l => l);
-            Files = libs.Select(l => (FileViewModelBase)new LibraryViewModel(l)).ToList();
+            var libs = (await App.Seafile.ListLibraries()).Distinct(l => l.Id);
+            App.LibCache = libs.ToDictionary(l => l.Id, l => l);
+            Files = App.LibCache.Values.Select(l => (FileViewModelBase)new LibraryViewModel(l)).ToList();
         }
     }
 }

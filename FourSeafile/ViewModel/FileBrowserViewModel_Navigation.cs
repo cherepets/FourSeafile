@@ -86,7 +86,7 @@ namespace FourSeafile.ViewModel
             }
             catch
             {
-                await Warning.ShowAsync($"{ Localization.CantUpload}: {file.Name}");
+                await Warning.ShowAsync($"{Localization.CantUpload}: {file.Name}");
             }
         }
 

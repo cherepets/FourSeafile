@@ -9,9 +9,10 @@ namespace FourSeafile.Extensions
     {
         private static EventHandler<BackRequestedEventArgs> _desktopHandler;
         private static EventHandler<BackPressedEventArgs> _mobileHandler;
+        private static Action _action;
+        private static Action _stash;
         private static readonly object Lock = new object();
 
-        private static Tuple<EventHandler<BackRequestedEventArgs>, EventHandler<BackPressedEventArgs>> _stash;
 
         public static bool BackHandlerAttached => _desktopHandler != null || _mobileHandler != null;
 
@@ -19,6 +20,7 @@ namespace FourSeafile.Extensions
         {
             lock (Lock)
             {
+                _action = action;
                 if (BackHandlerAttached) page.DetachBackHandler();
                 switch (Platform.Current)
                 {
@@ -27,7 +29,7 @@ namespace FourSeafile.Extensions
                         navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                         _desktopHandler = (s, e) =>
                         {
-                            action.Invoke();
+                            _action.Invoke();
                             e.Handled = true;
                         };
                         navigationManager.BackRequested += _desktopHandler;
@@ -35,7 +37,7 @@ namespace FourSeafile.Extensions
                     case Platform.Mobile:
                         _mobileHandler = (s, e) =>
                         {
-                            action.Invoke();
+                            _action.Invoke();
                             e.Handled = true;
                         };
                         HardwareButtons.BackPressed += _mobileHandler;
@@ -63,16 +65,14 @@ namespace FourSeafile.Extensions
         }
 
         public static void StashHandler(this Page page)
-        {
-            if (_desktopHandler == null || _mobileHandler == null) return;
-            _stash = new Tuple<EventHandler<BackRequestedEventArgs>, EventHandler<BackPressedEventArgs>>(_desktopHandler, _mobileHandler);
-        }
+            => _stash = BackHandlerAttached
+            ? _action
+            : null;
 
         public static void UnstashHandler(this Page page)
         {
             if (_stash == null) return;
-            _desktopHandler = _stash.Item1;
-            _mobileHandler = _stash.Item2;
+            page.AttachBackHandler(_stash);
         }
     }
 }

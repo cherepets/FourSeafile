@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:uc="using:FourSeafile.UserControls" 
     IsEnabled="{Binding SelectedFolder.IsLoaded}">
-    <Grid DataContext="{Binding SelectedFolder}">
+    <Grid x:Name="Root" DataContext="{Binding SelectedFolder}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <uc:StatusBarController x:Name="StatusBar" />
         <uc:GridView x:Name="GridView" ItemsSource="{Binding Files}" AllowDrop="True" DesiredItemSize="260"
                      Drop="GridView_Drop" DragOver="GridView_DragOver">
             <uc:GridView.ItemTemplate>

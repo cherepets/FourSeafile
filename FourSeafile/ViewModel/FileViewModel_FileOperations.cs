@@ -1,10 +1,11 @@
 ﻿using FourSeafile.Component;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
-using Windows.Foundation;
 using Windows.Storage.FileProperties;
 
 namespace FourSeafile.ViewModel
@@ -21,6 +22,25 @@ namespace FourSeafile.ViewModel
 
         public IAsyncOperation<string> GetDownloadLinkAsyncOperation()
             => GetDownloadLinkAsync().AsAsyncOperation();
+
+        public async Task<bool> UploadContentAsync(byte[] content)
+        {
+            if (!IsFile) return false;
+            try
+            {
+                // Otherwise duplicate will be created
+                await DeleteAsync();
+            }
+            catch
+            {
+                // Ignore. May be already deleted?
+            }
+            var progress = new StructContainer<double>();
+            var path = Parent is FileViewModel
+                ? ((FileViewModel)Parent).Path
+                : "/";
+            return await App.Seafile.UploadSingle(App.LibCache[LibId], path, Name, new MemoryStream(content), f => progress.Value = f);
+        }
 
         public async Task DeleteAsync()
         {
