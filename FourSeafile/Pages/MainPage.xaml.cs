@@ -10,6 +10,7 @@ namespace FourSeafile.Pages
     public sealed partial class MainPage
     {
         public static event EventHandler<NavigationEventArgs> NavigatedTo;
+        public static bool ForceReload;
 
         public const int ViewTrigger = 720;
 
@@ -24,23 +25,20 @@ namespace FourSeafile.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var forceReload = false;
-            if (e.Parameter is bool)
-                forceReload = (bool)e.Parameter;
             NavigatedTo?.Invoke(this, e);
-            if (DataContext == null || forceReload)
-                DataContext = new RootViewModel();
+            if (DataContext == null || ForceReload)
+                DataContext = ViewModelFactory.CreateRoot();
         }
 
         private async void AddressBar_UserInput(object sender, string e)
         {
-            var vm = (RootViewModel)DataContext;
+            var vm = (IRootViewModel)DataContext;
             await vm.FileBrowser.NavigateToAddressAsync(e);
         }
 
         private void AddressBar_RootRequested(object sender, EventArgs e)
         {
-            var vm = (RootViewModel)DataContext;
+            var vm = (IRootViewModel)DataContext;
             vm.FileBrowser.NavigateToRoot();
         }
 

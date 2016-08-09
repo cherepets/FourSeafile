@@ -26,6 +26,7 @@ namespace FourSeafile
         public static string IsDownloading => Get();
         public static string IsUploading => Get();
         public static string No => Get();
+        public static string NotInDemo => Get();
         public static string Password => Get();
         public static string Ok => Get();
         public static string Warning => Get();

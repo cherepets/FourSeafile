@@ -1,50 +1,24 @@
 ﻿namespace FourSeafile.ViewModel
 {
-    public class RootViewModel : ViewModelBase
+    public interface IRootViewModel
     {
-        public UserInfoViewModel UserInfo
-        {
-            get
-            {
-                OnPropertyGet();
-                return _userInfo ?? (_userInfo = new UserInfoViewModel());
-            }
-            set
-            {
-                _userInfo = value;
-                OnPropertyChanged();
-            }
-        }
-        private UserInfoViewModel _userInfo;
+        IUserInfoViewModel UserInfo { get; }
+        IFileBrowserViewModel FileBrowser { get; }
+        ProgressViewModel Progress { get; }
+    }
 
-        public FileBrowserViewModel FileBrowser
-        {
-            get
-            {
-                OnPropertyGet();
-                return _fileBrowser ?? (_fileBrowser = new FileBrowserViewModel { SelectedFolder = FileRootViewModel.Current });
-            }
-            set
-            {
-                _fileBrowser = value;
-                OnPropertyChanged();
-            }
-        }
-        private FileBrowserViewModel _fileBrowser;
+    public class RootViewModel : IRootViewModel
+    {
+        public IUserInfoViewModel UserInfo
+            => _userInfo ?? (_userInfo = new UserInfoViewModel());
+        private IUserInfoViewModel _userInfo;
+
+        public IFileBrowserViewModel FileBrowser
+            => _fileBrowser ?? (_fileBrowser = new FileBrowserViewModel { SelectedFolder = FileRootViewModel.Current });
+        private IFileBrowserViewModel _fileBrowser;
 
         public ProgressViewModel Progress
-        {
-            get
-            {
-                OnPropertyGet();
-                return _progress ?? (_progress = new ProgressViewModel());
-            }
-            set
-            {
-                _progress = value;
-                OnPropertyChanged();
-            }
-        }
+            => _progress ?? (_progress = new ProgressViewModel());
         private ProgressViewModel _progress;
     }
 }

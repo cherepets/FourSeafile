@@ -7,7 +7,16 @@ using Windows.UI.Xaml.Media;
 
 namespace FourSeafile.ViewModel
 {
-    public class UserInfoViewModel : ViewModelBase
+    public interface IUserInfoViewModel
+    {
+        string Nickname { get; }
+        string Avatar { get; }
+        ChartData UsageData { get; }
+        string UsedSpace { get; }
+        string TotalSpace { get; }
+    }
+
+    public class UserInfoViewModel : ViewModelBase, IUserInfoViewModel
     {
         public string Nickname
         {

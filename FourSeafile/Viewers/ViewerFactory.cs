@@ -19,11 +19,17 @@ namespace FourSeafile.Viewers
             { "php", typeof(TextViewer) },
             { "log", typeof(TextViewer) },
             { "md", typeof(TextViewer) },
+
+            { "bmp", typeof(ImageViewer) },
+            { "png", typeof(ImageViewer) },
+            { "gif", typeof(ImageViewer) },
+            { "jpg", typeof(ImageViewer) },
+            { "jpeg", typeof(ImageViewer) },
         };
 
         private static readonly Type _default = typeof(DefaultViewer);
 
-        public static IViewer Get(FileViewModel fileVM)
+        public static IViewer Get(IFileViewModel fileVM)
         {
             var type = _default;
             var ext = fileVM.Name.Split('.').Last().ToLowerInvariant();

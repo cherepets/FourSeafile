@@ -1,14 +1,13 @@
 ﻿using FourSeafile.UserControls;
-using SeafClient;
 using SeafClient.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FourSeafile.ViewModel
+namespace FourSeafile.ViewModel.Mock
 {
-    public class LibraryViewModel : FileViewModelBase
+    public class LibraryViewModelMock : FileViewModelBase
     {
         public override bool IsFolder => true;
         public override string Name => _lib.Name;
@@ -16,7 +15,7 @@ namespace FourSeafile.ViewModel
         public override FileViewModelBase Parent => FileRootViewModel.Current;
         public override string Info => _lib.Timestamp.ToString();
         public override IconViewModel Icon => IconViewModel.LibraryIcon;
-        public override bool CanUpload => true;
+        public override bool CanUpload => false;
 
         public override List<FileViewModelBase> Files
         {
@@ -35,7 +34,7 @@ namespace FourSeafile.ViewModel
 
         private SeafLibrary _lib;
 
-        public LibraryViewModel(SeafLibrary lib)
+        public LibraryViewModelMock(SeafLibrary lib)
         {
             _lib = lib;
         }
@@ -48,31 +47,25 @@ namespace FourSeafile.ViewModel
                 var dialog = new PasswordInputDialog();
                 allowed = false;
                 await dialog.ShowAsync();
-                Exception exception = null;
                 if (dialog.Result)
                 {
                     var password = dialog.Password;
                     if (!string.IsNullOrEmpty(password))
-                    {
-                        try
-                        {
-                            allowed = await App.Seafile.DecryptLibrary(_lib, password.ToCharArray());
-                        }
-                        catch (SeafException ex)
-                        {
-                            exception = ex;
-                        }
-                    }
+                        allowed = password == "123";
                 }
                 if (!allowed)
-                    throw (exception == null
-                        ? new UnauthorizedAccessException(Localization.CantDecrypt)
-                        : new UnauthorizedAccessException(Localization.CantDecrypt, exception));
+                    throw new UnauthorizedAccessException(Localization.CantDecrypt);
             }
             if (allowed)
             {
-                var dirs = await App.Seafile.ListDirectory(_lib);
-                Files = dirs.Select(f => (FileViewModelBase)new FileViewModel(this, f)).ToList();
+                var dirs = new List<SeafDirEntry>
+                {
+                    new SeafDirEntry { Id = "0", LibraryId = _lib.Id, Name = "Text.txt", Size = 1024 },
+                    new SeafDirEntry { Id = "1", LibraryId = _lib.Id, Name = "Image1.png", Size = 4096 },
+                    new SeafDirEntry { Id = "2", LibraryId = _lib.Id, Name = "Image2.png", Size = 4096 },
+                    new SeafDirEntry { Id = "3", LibraryId = _lib.Id, Name = "Image3.png", Size = 4096 },
+                };
+                Files = dirs.Select(f => (FileViewModelBase)new FileViewModelMock(this, f)).ToList();
             }
             else
             {

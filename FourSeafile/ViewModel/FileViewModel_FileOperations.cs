@@ -36,8 +36,8 @@ namespace FourSeafile.ViewModel
                 // Ignore. May be already deleted?
             }
             var progress = new StructContainer<double>();
-            var path = Parent is FileViewModel
-                ? ((FileViewModel)Parent).Path
+            var path = Parent is IFileViewModel
+                ? ((IFileViewModel)Parent).Path
                 : "/";
             return await App.Seafile.UploadSingle(App.LibCache[LibId], path, Name, new MemoryStream(content), f => progress.Value = f);
         }

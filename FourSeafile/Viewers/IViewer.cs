@@ -7,7 +7,7 @@ namespace FourSeafile.Viewers
 {
     public interface IViewer
     {
-        void Open(FileViewModel fileVM);
+        void Open(IFileViewModel fileVM);
         Task<bool> CanClose();
     }
 

@@ -16,6 +16,7 @@ namespace FourSeafile.Pages
                 var viewer = Content as IViewer;
                 if (viewer == null || await viewer.CanClose())
                 {
+                    MainPage.ForceReload = false;
                     App.Frame.GoBack();
                     this.DetachBackHandler();
                     this.UnstashHandler();

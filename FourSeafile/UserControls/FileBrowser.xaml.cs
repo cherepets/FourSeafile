@@ -14,7 +14,7 @@ namespace FourSeafile.UserControls
     {
         private const int MinItemWidth = 280;
 
-        private FileBrowserViewModel BrowserVM => DataContext as FileBrowserViewModel;
+        private IFileBrowserViewModel BrowserVM => DataContext as IFileBrowserViewModel;
 
         public FileBrowser()
         {
@@ -29,7 +29,7 @@ namespace FourSeafile.UserControls
                 BrowserVM.SelectedFolder = vm;
             else
             {
-                var fvm = vm as FileViewModel;
+                var fvm = vm as IFileViewModel;
                 if (fvm == null) return;
                 var viewer = ViewerFactory.Get(fvm);
                 viewer.Open(fvm);
@@ -83,7 +83,7 @@ namespace FourSeafile.UserControls
 
         private void GridView_DragOver(object sender, DragEventArgs e)
         {
-            if (BrowserVM.SelectedFolder is FileViewModel && BrowserVM.SelectedFolder.IsFolder)
+            if (BrowserVM.SelectedFolder is IFileViewModel && BrowserVM.SelectedFolder.IsFolder)
                 e.AcceptedOperation = DataPackageOperation.Copy | DataPackageOperation.Move;
         }
 
@@ -91,14 +91,14 @@ namespace FourSeafile.UserControls
         {
             var vm = (sender as FrameworkElement)?.DataContext as FileViewModelBase;
             if (vm == null) return;
-            if (vm is FileViewModel && vm.IsFolder)
+            if (vm is IFileViewModel && vm.IsFolder)
                 e.AcceptedOperation = DataPackageOperation.Copy | DataPackageOperation.Move;
         }
 
         private async void FileIconView_DragStarting(UIElement sender, DragStartingEventArgs e)
         {
             var deferral = e.GetDeferral();
-            var vm = (sender as FrameworkElement)?.DataContext as FileViewModel;
+            var vm = (sender as FrameworkElement)?.DataContext as IFileViewModel;
             if (vm == null) return;
             var bp = await BasicPropertiesFactory.GetAsync();
             e.Data.SetStorageItems(new[] { vm.AsStorageFile(bp) }, false);

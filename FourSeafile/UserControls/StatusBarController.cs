@@ -69,7 +69,7 @@ namespace FourSeafile.UserControls
             set
             {
                 SetValue(TextProperty, value);
-                if (StatusBar != null)
+                if (StatusBar != null && value != null)
                     StatusBar.ProgressIndicator.Text = value;
                 UpdateProgressIndicatorVisibility();
             }

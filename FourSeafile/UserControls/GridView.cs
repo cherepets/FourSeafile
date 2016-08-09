@@ -119,6 +119,7 @@ namespace FourSeafile.UserControls
         {
             foreach (FrameworkElement element in _panel.Children)
                 Resize(element, size);
+            (_panel as WrapPanel)?.InvalidateMeasure();
         }
 
         private void Resize(FrameworkElement element, double? size)
@@ -130,10 +131,10 @@ namespace FourSeafile.UserControls
         {
             if (double.IsNaN(DesiredItemSize) || DesiredItemSize == 0) return null;
             var width = ActualWidth;
-            var columns = (int)(width / DesiredItemSize);
+            var columns = (int)(Math.Floor(width / DesiredItemSize));
             if (columns <= 0) columns = 1;
             var extraSize = width - columns * DesiredItemSize;
-            var size = (int)(DesiredItemSize + extraSize / columns);
+            var size = (int)(Math.Floor(DesiredItemSize + extraSize / columns));
             return size;
         }
 

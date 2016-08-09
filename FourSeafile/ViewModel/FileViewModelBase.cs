@@ -5,7 +5,7 @@ namespace FourSeafile.ViewModel
 {
     public abstract class FileViewModelBase : ViewModelBase
     {
-        public abstract List<FileViewModelBase> Files { get; set; }
+        public abstract List<FileViewModelBase> Files { get; protected set; }
         public abstract FileViewModelBase Parent { get; }
         public abstract string Name { get; }
         public abstract string LibId { get; }

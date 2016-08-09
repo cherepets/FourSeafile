@@ -1,12 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using FourSeafile.Extensions;
 using SeafClient.Types;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
-using FourSeafile.Extensions;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.FileProperties;
 
 namespace FourSeafile.ViewModel
 {
-    public partial class FileViewModel : FileViewModelBase
+    public interface IFileViewModel
+    {
+        bool IsFolder { get; }
+        string Name { get; }
+        string LibId { get; }
+        string Path { get; }
+        bool CanUpload { get; }
+        FileViewModelBase Parent { get; }
+        string Info { get; }
+        IconViewModel Icon { get; }
+        List<FileViewModelBase> Files { get; }
+        FileType Type { get; }
+        Task<StorageFile> DownloadAsync(StorageFolder folder);
+        Task<string> GetDownloadLinkAsync();
+        IAsyncOperation<string> GetDownloadLinkAsyncOperation();
+        Task<bool> UploadContentAsync(byte[] content);
+        Task DeleteAsync();
+        IAsyncAction DeleteAsyncAction();
+        IStorageFile AsStorageFile(BasicProperties bp = null);
+    }
+
+    public partial class FileViewModel : FileViewModelBase, IFileViewModel
     {
         public override bool IsFolder => Type == FileType.Folder;
         public override string Name => _entry.Name;
@@ -24,7 +48,7 @@ namespace FourSeafile.ViewModel
             get
             {
                 if (IsFolder) return IconViewModel.FolderIcon;
-                if (Name.HasExt(new[] { "bmp", "png", "gif", "tiff", "jpg", "jpeg", "ico", "swg" })) return IconViewModel.PictureIcon;
+                if (Name.HasExt(new[] { "bmp", "png", "gif", "tiff", "jpg", "jpeg", "ico", "svg" })) return IconViewModel.PictureIcon;
                 if (Name.HasExt(new[] { "mp3", "wav", "flac", "amr", "ogg" })) return IconViewModel.MusicIcon;
                 if (Name.HasExt(new[] { "avi", "mov", "wmv", "flv", "mp4", "mpeg", "mpg", "mkv" })) return IconViewModel.VideoIcon;
                 if (Name.HasExt(new[] { "doc", "docx", "rtf", "pdf" , "txt" })) return IconViewModel.DocumentIcon;
@@ -42,7 +66,7 @@ namespace FourSeafile.ViewModel
                 OnPropertyGet();
                 return _files;
             }
-            set
+            protected set
             {
                 _files = value;
                 OnPropertyChanged();
@@ -57,7 +81,7 @@ namespace FourSeafile.ViewModel
                 OnPropertyGet();
                 return _type;
             }
-            set
+            protected set
             {
                 _type = value;
                 OnPropertyChanged();

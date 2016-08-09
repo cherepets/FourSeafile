@@ -1,11 +1,11 @@
-﻿using FourSeafile.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
-namespace FourSeafile.ViewModel
+namespace FourSeafile.ViewModel.Mock
 {
-    public class FileRootViewModel : FileViewModelBase
+    public class FileRootViewModelMock : FileViewModelBase
     {
         public override bool IsFolder => true;
         public override string Name => "";
@@ -31,19 +31,22 @@ namespace FourSeafile.ViewModel
         }
         private List<FileViewModelBase> _files;
         
-        private FileRootViewModel() { }
+        private FileRootViewModelMock() { }
 
-        public static FileRootViewModel Current => _current ?? (_current = new FileRootViewModel());
-        private static FileRootViewModel _current;
+        public static FileRootViewModelMock Current => _current ?? (_current = new FileRootViewModelMock());
+        private static FileRootViewModelMock _current;
 
         public static void Reset()
             => _current = null;
 
         protected override async Task LoadAsync()
         {
-            var libs = (await App.Seafile.ListLibraries()).Distinct(l => l.Id);
-            App.LibCache = libs.ToDictionary(l => l.Id, l => l);
-            Files = App.LibCache.Values.Select(l => (FileViewModelBase)new LibraryViewModel(l)).ToList();
+            App.LibCache = new Dictionary<string, SeafClient.Types.SeafLibrary>
+            {
+                { "1", new SeafClient.Types.SeafLibrary { Id = "1", Name = "Test", Timestamp = DateTime.Now } },
+                { "2", new SeafClient.Types.SeafLibrary { Id = "2", Name = "Encrypted", Timestamp = DateTime.Now, Encrypted = true } }
+            };
+            Files = App.LibCache.Values.Select(l => (FileViewModelBase)new LibraryViewModelMock(l)).ToList();
         }
     }
 }

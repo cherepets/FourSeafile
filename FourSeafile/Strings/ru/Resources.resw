@@ -147,6 +147,9 @@
   <data name="DeleteButton.Text" xml:space="preserve">
     <value>Удалить</value>
   </data>
+  <data name="DemoButton.Content" xml:space="preserve">
+    <value>Демо</value>
+  </data>
   <data name="DownloadButton.Text" xml:space="preserve">
     <value>Скачать</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="No" xml:space="preserve">
     <value>Нет</value>
+  </data>
+  <data name="NotInDemo" xml:space="preserve">
+    <value>Не доступно в режиме демонстрации</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Далее</value>

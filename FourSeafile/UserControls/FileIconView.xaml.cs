@@ -51,7 +51,7 @@ namespace FourSeafile.UserControls
 
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            var fvm = FileVM as FileViewModel;
+            var fvm = FileVM as IFileViewModel;
             var file = fvm.AsStorageFile();
             var folder = await PickFolderAsync(file.FileType);
             if (folder != null)
@@ -60,7 +60,7 @@ namespace FourSeafile.UserControls
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var fvm = FileVM as FileViewModel;
+            var fvm = FileVM as IFileViewModel;
             var file = fvm.AsStorageFile();
             if (await Confirmation.ShowAsync($"{Localization.Delete} {file.Name}?"))
             {
@@ -75,10 +75,15 @@ namespace FourSeafile.UserControls
 
         private async void OnClick()
         {
-            StatusBar.Text = $"{FileVM.Name} {Localization.IsDownloading}...";
+            var fvm = FileVM;
+            if (fvm.IsFile)
+                StatusBar.Text = $"{FileVM.Name} {Localization.IsDownloading}...";
             Click?.Invoke(this, null);
-            await Task.Delay(1000);
-            StatusBar.Text = null;
+            if (fvm.IsFile)
+            {
+                await Task.Delay(1000);
+                StatusBar.Text = null;
+            }
         }
 
         private static async Task<StorageFolder> PickFolderAsync(string ext)

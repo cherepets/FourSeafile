@@ -8,21 +8,27 @@
         <StackPanel Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Margin="12">
                 <TextBlock x:Uid="HostBlock" />
-                <TextBox x:Name="HostBox" Text="https://dev.seafile.com/seahub/" />
+                <TextBox x:Name="HostBox" Text="https://" />
             </StackPanel>
             <StackPanel Margin="12">
             <TextBlock x:Uid="LoginBlock" />
-                <TextBox x:Name="LoginBox" Text="demo@seafile.com" />
+                <TextBox x:Name="LoginBox" />
             </StackPanel>
             <StackPanel Margin="12">
                 <TextBlock x:Uid="PasswordBlock" />
-                <PasswordBox x:Name="PasswordBox" Password="demo" />
+                <PasswordBox x:Name="PasswordBox" />
             </StackPanel>
             <CheckBox x:Name="WindowsHelloBox" IsChecked="True" Content="Windows Hello" Margin="12" />
-            <StackPanel Margin="12" Orientation="Horizontal">
-                <Button x:Name="LoginButton" x:Uid="LoginButton" Click="LoginButton_Click" />
-                <HyperlinkButton x:Uid="SignUpButton" Click="HyperlinkButton_Click" Margin="12,0" />
-            </StackPanel>
+            <Grid Margin="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="LoginButton" x:Uid="LoginButton" Click="LoginButton_Click" Grid.Column="0" />
+                <HyperlinkButton x:Uid="SignUpButton" Click="HyperlinkButton_Click" Margin="12,0" Grid.Column="1" />
+                <Button x:Name="DemoButton" x:Uid="DemoButton" Click="DemoButton_Click" Grid.Column="2" />
+            </Grid>
         </StackPanel>
     </Grid>
 </Page>

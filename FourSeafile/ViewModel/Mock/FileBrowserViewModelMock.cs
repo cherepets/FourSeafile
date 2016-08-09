@@ -1,24 +1,16 @@
 ﻿using FourSeafile.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace FourSeafile.ViewModel
+namespace FourSeafile.ViewModel.Mock
 {
-    public interface IFileBrowserViewModel
+    public partial class FileBrowserViewModelMock : ViewModelBase, IFileBrowserViewModel
     {
-        FileViewModelBase SelectedFolder { get; set; }
-        string Address { get; }
-        void GoUp();
-        void GoBack();
-        void NavigateToRoot();
-        Task NavigateToAddressAsync(string e);
-        void Upload(IStorageFile file);
-    }
+        private Stack<FileViewModelBase> History { get; } = new Stack<FileViewModelBase>();
 
-    public partial class FileBrowserViewModel : ViewModelBase, IFileBrowserViewModel
-    {
         public FileViewModelBase SelectedFolder
         {
             get { return _selectedFolder; }
@@ -48,6 +40,25 @@ namespace FourSeafile.ViewModel
 
         private string LocalAddress
             => (SelectedFolder as IFileViewModel)?.Path ?? string.Empty;
+
+        private bool CanGoBack => History.Count > 1;
+
+        public void GoUp()
+            => SelectedFolder = FileRootViewModelMock.Current;
+
+        public void GoBack()
+        {
+            History.Pop();
+            var prev = History.Pop();
+            SelectedFolder = prev;
+        }
+
+        public void NavigateToRoot()
+            => SelectedFolder = FileRootViewModelMock.Current;
+
+        public async Task NavigateToAddressAsync(string e) => MockHelper.Throw();
+
+        public void Upload(IStorageFile file) => MockHelper.Throw();
 
         private void UpdateBackHandler()
         {

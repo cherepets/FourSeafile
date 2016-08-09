@@ -55,8 +55,8 @@ namespace FourSeafile.UserControls
             foreach (var element in Children)
             {
                 element.Measure(itemSize);
-                var elementWidth = hasFixedWidth ? itemWidth : element.DesiredSize.Width;
-                var elementHeight = hasFixedHeight ? itemHeight : element.DesiredSize.Height;
+                var elementWidth = hasFixedWidth ? itemWidth : Math.Floor(element.DesiredSize.Width);
+                var elementHeight = hasFixedHeight ? itemHeight : Math.Floor(element.DesiredSize.Height);
                 var elementDirectSize = GetDirectSize(orientation, elementWidth, elementHeight);
                 var elementIndirectSize = GetIndirectSize(orientation, elementWidth, elementHeight);
                 if (lineDirectSize + elementDirectSize > maximumSize)
@@ -114,8 +114,8 @@ namespace FourSeafile.UserControls
             for (var i = 0; i < children.Count; i++)
             {
                 var element = children[i];
-                var elementWidth = hasFixedWidth ? itemWidth : element.DesiredSize.Width;
-                var elementHeight = hasFixedHeight ? itemHeight : element.DesiredSize.Height;
+                var elementWidth = hasFixedWidth ? itemWidth : Math.Floor(element.DesiredSize.Width);
+                var elementHeight = hasFixedHeight ? itemHeight : Math.Floor(element.DesiredSize.Height);
                 var elementDirectSize = GetDirectSize(orientation, elementWidth, elementHeight);
                 var elementIndirectSize = GetIndirectSize(orientation, elementWidth, elementHeight);
                 if (lineDirectSize + elementDirectSize > maximumSize)
@@ -152,9 +152,11 @@ namespace FourSeafile.UserControls
             for (var i = lineStart; i < lineEnd; i++)
             {
                 var element = children[i];
+                var elementWidth = Math.Floor(element.DesiredSize.Width);
+                var elementHeight =Math.Floor(element.DesiredSize.Height);
                 var directGrowth = directDelta != null
                     ? directDelta.Value
-                    : GetDirectSize(orientation, element.DesiredSize.Width, element.DesiredSize.Height);
+                    : GetDirectSize(orientation, elementWidth, elementHeight);
                 var bounds = orientation == Orientation.Horizontal
                     ? new Rect(directOffset, indirectOffset, directGrowth, indirectGrowth)
                     : new Rect(indirectOffset, directOffset, indirectGrowth, directGrowth);

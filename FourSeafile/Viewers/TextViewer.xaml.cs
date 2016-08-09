@@ -12,7 +12,7 @@ namespace FourSeafile.Viewers
 {
     public sealed partial class TextViewer : IViewer
     {
-        private FileViewModel _fileVM;
+        private IFileViewModel _fileVM;
         private IStorageFile _file;
         private bool _modified;
         private bool _ctrl;
@@ -22,7 +22,7 @@ namespace FourSeafile.Viewers
             InitializeComponent();
         }
 
-        public async void Open(FileViewModel fileVM)
+        public async void Open(IFileViewModel fileVM)
         {
             _fileVM = fileVM;
             Header.Text = _fileVM.ToString();
@@ -74,8 +74,15 @@ namespace FourSeafile.Viewers
             try
             {
                 var folder = await PickFolderAsync(_file.FileType);
-                if (folder != null)
-                    await _file.CopyAsync(folder);
+                if (folder == null) return;
+                string text;
+                Editor.Document.GetText(TextGetOptions.AdjustCrlf, out text);
+                var file = await folder.CreateFileAsync(_fileVM.Name, CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(file, text, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+            }
+            catch (Exception ex)
+            {
+                App.HandleException(ex);
             }
             finally
             {

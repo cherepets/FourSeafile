@@ -12,6 +12,7 @@ namespace FourSeafile.Pages
     {
         public static event EventHandler<NavigationEventArgs> NavigatedTo;
         public static event EventHandler<SeafSession> TokenReceived;
+        public static event EventHandler DemoSelected;
 
         private const string RegisterLink = "accounts/register/";
 
@@ -65,6 +66,9 @@ namespace FourSeafile.Pages
                 IsEnabled = true;
             }
         }
+
+        private void DemoButton_Click(object sender, RoutedEventArgs e)
+            => DemoSelected?.Invoke(this, null);
 
         private async System.Threading.Tasks.Task EnableWindowsHello()
         {

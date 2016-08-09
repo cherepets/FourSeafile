@@ -25,6 +25,7 @@ namespace FourSeafile
         public static SeafSession Seafile { get; private set; }
         public static Page CurrentPage { get; private set; }
         public static Frame Frame { get; private set; }
+        public static bool Demo { get; private set; }
 
         public static Dictionary<string, SeafLibrary> LibCache { get; set; }
 
@@ -35,8 +36,17 @@ namespace FourSeafile
             MainPage.NavigatedTo += (s, e) => CurrentPage = (Page)s;
             AuthPage.TokenReceived += (s, e) =>
             {
+                Demo = false;
                 Seafile = e;
-                Frame.Navigate(typeof(MainPage), true);
+                MainPage.ForceReload = true;
+                Frame.Navigate(typeof(MainPage));
+            };
+            AuthPage.DemoSelected += (s, e) =>
+            {
+                Demo = true;
+                Seafile = null;
+                MainPage.ForceReload = true;
+                Frame.Navigate(typeof(MainPage));
             };
             Current.UnhandledException += Current_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
@@ -99,7 +109,7 @@ namespace FourSeafile
             LibCache = null;
             Credentials.Clear();
             FileRootViewModel.Reset();
-            Frame.Navigate(typeof(AuthPage), null);
+            Frame.Navigate(typeof(AuthPage));
         }
         
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
