@@ -25,8 +25,7 @@ namespace FourSeafile.UserControls
             get { return _itemsPanel; }
             set
             {
-                var panel = value.LoadContent() as Panel;
-                if (panel == null) throw new ArgumentException("GridView.ItemsPanel.DataTemplate is not a panel!");
+                if (!(value.LoadContent() is Panel panel)) throw new ArgumentException("GridView.ItemsPanel.DataTemplate is not a panel!");
                 _panel = panel;
                 _scroll.Content = _panel;
                 _itemsPanel = value;
@@ -46,8 +45,7 @@ namespace FourSeafile.UserControls
             var view = d as GridView;
             var value = e.NewValue as IList;
             view._itemsSource = value;
-            var observable = view._itemsSource as INotifyCollectionChanged;
-            if (observable != null)
+            if (view._itemsSource is INotifyCollectionChanged observable)
                 observable.CollectionChanged += (s, a) => view.Redraw();
             view.SelectedIndex = 0;
         }

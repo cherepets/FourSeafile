@@ -44,8 +44,7 @@ namespace FourSeafile.Viewers
             IsEnabled = false;
             try
             {
-                string text;
-                Editor.Document.GetText(TextGetOptions.AdjustCrlf, out text);
+                Editor.Document.GetText(TextGetOptions.AdjustCrlf, out string text);
                 var task = FileIO.WriteTextAsync(_file, text, Windows.Storage.Streams.UnicodeEncoding.Utf8);
                 var content = Encoding.UTF8.GetBytes(text);
                 var result = await _fileVM.UploadContentAsync(content);
@@ -75,8 +74,7 @@ namespace FourSeafile.Viewers
             {
                 var folder = await PickFolderAsync(_file.FileType);
                 if (folder == null) return;
-                string text;
-                Editor.Document.GetText(TextGetOptions.AdjustCrlf, out text);
+                Editor.Document.GetText(TextGetOptions.AdjustCrlf, out string text);
                 var file = await folder.CreateFileAsync(_fileVM.Name, CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(file, text, Windows.Storage.Streams.UnicodeEncoding.Utf8);
             }

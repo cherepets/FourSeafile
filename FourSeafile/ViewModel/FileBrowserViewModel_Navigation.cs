@@ -58,8 +58,7 @@ namespace FourSeafile.ViewModel
 
         public async void Upload(IStorageFile file)
         {
-            var sf = file as SeaStorageFile;
-            if (sf != null) await UploadSeaStorageFileAsync(sf);
+            if (file is SeaStorageFile sf) await UploadSeaStorageFileAsync(sf);
             else await UploadStorageFileAsync(file);
             SelectedFolder.RefreshContent();
         }
@@ -94,8 +93,7 @@ namespace FourSeafile.ViewModel
         {
             if (string.IsNullOrEmpty(SelectedFolder.LibId)) return;
             var lib = App.LibCache[SelectedFolder.LibId];
-            var vm = file.Implementation as IFileViewModel;
-            if (vm == null || !vm.CanUpload) return;
+            if (!(file.Implementation is IFileViewModel vm) || !vm.CanUpload) return;
             await App.Seafile.CopyFile(App.LibCache[vm.LibId], vm.Path, lib, LocalAddress);
         }
     }

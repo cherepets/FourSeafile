@@ -26,19 +26,19 @@ namespace FourSeafile.UserControls
             };
             GotFocus += (s, e) =>
             {
-                Ants.Visibility = Visibility.Visible;
+                SelectionFrame.Visibility = Visibility.Visible;
                 Overlay.Visibility = Visibility.Visible;
             };
             LostFocus += (s, e) =>
             {
-                Ants.Visibility = Visibility.Collapsed;
+                SelectionFrame.Visibility = Visibility.Collapsed;
                 Overlay.Visibility = Visibility.Collapsed;
             };
             PointerEntered += (s, e) => Focus(FocusState.Pointer);
             Tapped += (s, e) => OnClick();
         }
 
-        #region Conext Menu
+        #region Context Menu
         private void Grid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             var element = sender as FrameworkElement;

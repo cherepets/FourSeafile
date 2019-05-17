@@ -34,20 +34,8 @@ namespace FourSeafile
             InitializeComponent();
             AuthPage.NavigatedTo += (s, e) => CurrentPage = (Page)s;
             MainPage.NavigatedTo += (s, e) => CurrentPage = (Page)s;
-            AuthPage.TokenReceived += (s, e) =>
-            {
-                Demo = false;
-                Seafile = e;
-                MainPage.ForceReload = true;
-                Frame.Navigate(typeof(MainPage));
-            };
-            AuthPage.DemoSelected += (s, e) =>
-            {
-                Demo = true;
-                Seafile = null;
-                MainPage.ForceReload = true;
-                Frame.Navigate(typeof(MainPage));
-            };
+            AuthPage.TokenReceived += (s, e) => OnTokenReceived(e);
+            AuthPage.DemoSelected += (s, e) => OnDemoSelected();
             Current.UnhandledException += Current_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
@@ -55,6 +43,22 @@ namespace FourSeafile
         public static new App Current => Application.Current as App;
 
         public static void HandleException(Exception e) => ShowExceptionMessage(e);
+
+        public static void OnTokenReceived(SeafSession session)
+        {
+            Demo = false;
+            Seafile = session;
+            MainPage.ForceReload = true;
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        public static void OnDemoSelected()
+        {
+            Demo = true;
+            Seafile = null;
+            MainPage.ForceReload = true;
+            Frame.Navigate(typeof(MainPage));
+        }
 
         private static void Current_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
@@ -126,16 +130,10 @@ namespace FourSeafile
             if (e.PrelaunchActivated == false)
             {
                 if (Frame.Content == null)
-                    Frame.Navigate(typeof(LoadingPage), e.Arguments);
-                if (Credentials.Exists() && (!Settings.Local.UseWindowsHello || await WindowsHello.VerifyAsync()))
                 {
-                    Seafile = await Credentials.AuthenticateAsync();
-                    if (Seafile != null) Frame.Navigate(typeof(MainPage), e.Arguments);
-                    else Frame.Navigate(typeof(AuthPage), e.Arguments);
+                    Frame.Navigate(typeof(LoadingPage), e.Arguments);
+                    Window.Current.Activate();
                 }
-                else
-                    Frame.Navigate(typeof(AuthPage), e.Arguments);
-                Window.Current.Activate();
             }
             await clearTask;
         }
@@ -143,8 +141,7 @@ namespace FourSeafile
         {
             if (!Platform.IsDesktop) return;
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            var accentBrush = Resources["SystemControlBackgroundAccentBrush"] as SolidColorBrush;
-            if (accentBrush != null)
+            if (Resources["SystemControlBackgroundAccentBrush"] is SolidColorBrush accentBrush)
             {
                 var accent = accentBrush.Color;
                 var light = accent.Lighten();

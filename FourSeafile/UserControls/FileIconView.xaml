@@ -9,10 +9,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <uc:StatusBarController x:Name="StatusBar" />
-        <Rectangle x:Name="Ants" Grid.ColumnSpan="2"
+        <Rectangle x:Name="SelectionFrame" Grid.ColumnSpan="2"
             Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}"
             StrokeThickness="1"
-            StrokeDashArray="2,2"
             Visibility="Collapsed" />
         <Rectangle x:Name="Overlay" Grid.ColumnSpan="2"
                    Opacity="0.25"

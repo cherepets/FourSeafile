@@ -1,5 +1,6 @@
 ﻿using SeafClient;
 using System;
+using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,8 +20,9 @@ namespace FourSeafile.Pages
         public AuthPage()
         {
             InitializeComponent();
-            var host = Settings.Encrypted.Host;
-            var login = Settings.Encrypted.Login;
+
+            var host = Settings.Local.Host;
+            var login = Settings.Local.Login;
             if (!string.IsNullOrWhiteSpace(host))
                 HostBox.Text = host;
             if (!string.IsNullOrWhiteSpace(login))
@@ -31,6 +33,9 @@ namespace FourSeafile.Pages
             }
             else
                 LoginButton.Focus(FocusState.Programmatic);
+
+            if (Settings.Local.Exists(nameof(Settings.Local.UseWindowsHello)))
+                WindowsHelloBox.IsChecked = Settings.Local.UseWindowsHello;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -70,12 +75,12 @@ namespace FourSeafile.Pages
         private void DemoButton_Click(object sender, RoutedEventArgs e)
             => DemoSelected?.Invoke(this, null);
 
-        private async System.Threading.Tasks.Task EnableWindowsHello()
+        private async Task EnableWindowsHello()
         {
-            if (WindowsHelloBox.IsChecked ?? false)
+            Settings.Local.UseWindowsHello = WindowsHelloBox.IsChecked ?? false;
+            if (Settings.Local.UseWindowsHello)
             {
-                var res = await WindowsHello.VerifyAsync();
-                Settings.Local.UseWindowsHello = res;
+                await WindowsHello.VerifyAsync();
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -16,15 +17,6 @@ namespace FourSeafile
                 _dictionary = null;
             }
         }
-        protected SettingsProvider DefaultsProvider
-        {
-            get { return _defaults; }
-            set
-            {
-                _defaults = value;
-                _dictionary = null;
-            }
-        }
 
         private IDictionary<string, object> Dictionary
         {
@@ -37,7 +29,8 @@ namespace FourSeafile
         private IDictionary<string, object> _dictionary;
 
         private SettingsProvider _provider;
-        private SettingsProvider _defaults;
+
+        public bool Exists(string key) => _provider.Exists(key);
 
         protected T GetProperty<T>([CallerMemberName] string property = null)
         {
@@ -45,7 +38,10 @@ namespace FourSeafile
                 Dictionary.Add(property, default(T));
             if (!(Dictionary[property] is T)
                 && (Dictionary[property] != null || typeof(T).GetTypeInfo().IsValueType))
-                throw new InvalidCastException(property + " is not " + typeof(T).Name);
+            {
+                Debug.WriteLine(property + " is not " + typeof(T).Name);
+                return default(T);
+            }
             return (T)Dictionary[property];
         }
 
@@ -59,9 +55,6 @@ namespace FourSeafile
         private void RefreshDictionary()
         {
             _dictionary = new Dictionary<string, object>();
-            if (_defaults != null && _defaults.Readable)
-                foreach (var pair in _defaults.GetSettings())
-                    _dictionary[pair.Key] = pair.Value;
             if (_provider != null && _provider.Readable)
                 foreach (var pair in _provider.GetSettings())
                     _dictionary[pair.Key] = pair.Value;

@@ -163,10 +163,10 @@
     <value>Authenticate with Windows Hello</value>
   </data>
   <data name="HelloError" xml:space="preserve">
-    <value>Authentication failed</value>
+    <value>Windows Hello authentication failed</value>
   </data>
   <data name="HelloRetry" xml:space="preserve">
-    <value>Error. Try again</value>
+    <value>Windows Hello error. Try again</value>
   </data>
   <data name="HelloUnavialable" xml:space="preserve">
     <value>Windows Hello is not available</value>

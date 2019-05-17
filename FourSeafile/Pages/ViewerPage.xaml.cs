@@ -13,8 +13,7 @@ namespace FourSeafile.Pages
             this.StashHandler();
             this.AttachBackHandler(async () =>
             {
-                var viewer = Content as IViewer;
-                if (viewer == null || await viewer.CanClose())
+                if (!(Content is IViewer viewer) || await viewer.CanClose())
                 {
                     MainPage.ForceReload = false;
                     App.Frame.GoBack();

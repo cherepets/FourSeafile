@@ -163,10 +163,10 @@
     <value>Войдите с Windows Hello</value>
   </data>
   <data name="HelloError" xml:space="preserve">
-    <value>Отказано во входе</value>
+    <value>Отказано во входе Windows Hello</value>
   </data>
   <data name="HelloRetry" xml:space="preserve">
-    <value>Ошибка. Попробуйте ещё раз</value>
+    <value>Ошибка Windows Hello. Попробуйте ещё раз</value>
   </data>
   <data name="HelloUnavialable" xml:space="preserve">
     <value>Windows Hello недоступен</value>

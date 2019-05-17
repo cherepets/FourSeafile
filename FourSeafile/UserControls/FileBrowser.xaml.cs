@@ -23,14 +23,12 @@ namespace FourSeafile.UserControls
         
         private void FileIconView_Click(object sender, EventArgs e)
         {
-            var vm = (sender as FrameworkElement)?.DataContext as FileViewModelBase;
-            if (vm == null) return;
+            if (!((sender as FrameworkElement)?.DataContext is FileViewModelBase vm)) return;
             if (vm.IsFolder)
                 BrowserVM.SelectedFolder = vm;
             else
             {
-                var fvm = vm as IFileViewModel;
-                if (fvm == null) return;
+                if (!(vm is IFileViewModel fvm)) return;
                 var viewer = ViewerFactory.Get(fvm);
                 viewer.Open(fvm);
                 viewer.NavigateTo();
@@ -75,8 +73,7 @@ namespace FourSeafile.UserControls
 
         private void FileIconView_Drop(object sender, DragEventArgs e)
         {
-            var vm = (sender as FrameworkElement)?.DataContext as FileViewModelBase;
-            if (vm == null) return;
+            if (!((sender as FrameworkElement)?.DataContext is FileViewModelBase vm)) return;
             BrowserVM.SelectedFolder = vm;
             GridView_Drop(sender, e);
         }
@@ -89,8 +86,7 @@ namespace FourSeafile.UserControls
 
         private void FileIconView_DragOver(object sender, DragEventArgs e)
         {
-            var vm = (sender as FrameworkElement)?.DataContext as FileViewModelBase;
-            if (vm == null) return;
+            if (!((sender as FrameworkElement)?.DataContext is FileViewModelBase vm)) return;
             if (vm is IFileViewModel && vm.IsFolder)
                 e.AcceptedOperation = DataPackageOperation.Copy | DataPackageOperation.Move;
         }
@@ -98,8 +94,7 @@ namespace FourSeafile.UserControls
         private async void FileIconView_DragStarting(UIElement sender, DragStartingEventArgs e)
         {
             var deferral = e.GetDeferral();
-            var vm = (sender as FrameworkElement)?.DataContext as IFileViewModel;
-            if (vm == null) return;
+            if (!((sender as FrameworkElement)?.DataContext is IFileViewModel vm)) return;
             var bp = await BasicPropertiesFactory.GetAsync();
             e.Data.SetStorageItems(new[] { vm.AsStorageFile(bp) }, false);
             deferral.Complete();
