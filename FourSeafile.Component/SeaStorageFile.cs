@@ -70,10 +70,10 @@ namespace FourSeafile.Component
         public IAsyncOperation<BasicProperties> GetBasicPropertiesAsync()
             => GetBasicPropertiesAsTask().AsAsyncOperation();
 
-        private async Task<BasicProperties> GetBasicPropertiesAsTask()
+        private Task<BasicProperties> GetBasicPropertiesAsTask()
         {
             var b = typeof(BasicProperties).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance);
-            return _bp;
+            return Task.FromResult(_bp);
         }
 
         public bool IsOfType(StorageItemTypes type)
