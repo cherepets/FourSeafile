@@ -40,10 +40,7 @@ namespace FourSeafile
 
         private static class Crypt
         {
-            public static string Salt
-                => WindowsHello.IsVerified
-                    ? WindowsHello.Sign
-                    : "salt";
+            public static string Salt => WindowsHello.Sign;
 
             public static byte[] Encrypt(string plainText, string key)
             {

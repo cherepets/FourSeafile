@@ -1,1 +1,1 @@
-C:\Users\chere\Documents\visual studio 2015\Github\FourSeafile\FourSeafile\AppPackages\FourSeafile_1.5.0.0\FourSeafile_1.5.0.0_x86_x64_arm.appxbundle
+S:\Src\Temp\FourSeafile\FourSeafile\bin\ARM\Release\Upload\FourSeafile_1.6.0.0\FourSeafile_1.6.0.0_x86_x64_arm.appxbundle
