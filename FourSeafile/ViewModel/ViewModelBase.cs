@@ -62,7 +62,11 @@ namespace FourSeafile.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        protected async virtual Task LoadAsync() { return; }
+        protected async virtual Task LoadAsync()
+        {
+            await Task.Yield();
+            return;
+        }
     }
 
     public enum LoadingState

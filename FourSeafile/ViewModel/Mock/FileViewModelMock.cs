@@ -68,14 +68,17 @@ namespace FourSeafile.ViewModel.Mock
         public IAsyncOperation<string> GetDownloadLinkAsyncOperation()
             => GetDownloadLinkAsync().AsAsyncOperation();
 
-        public async Task<bool> UploadContentAsync(byte[] content)
+        public Task<bool> UploadContentAsync(byte[] content)
         {
             MockHelper.Throw();
-            return false;
+            return Task.FromResult(false);
         }
 
         public async Task DeleteAsync()
-            => MockHelper.Throw();
+        {
+            await Task.Yield();
+            MockHelper.Throw();
+        }
 
         public IAsyncAction DeleteAsyncAction()
             => DeleteAsync().AsAsyncAction();

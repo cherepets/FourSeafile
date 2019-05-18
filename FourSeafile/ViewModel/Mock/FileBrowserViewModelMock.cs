@@ -56,7 +56,11 @@ namespace FourSeafile.ViewModel.Mock
         public void NavigateToRoot()
             => SelectedFolder = FileRootViewModelMock.Current;
 
-        public async Task NavigateToAddressAsync(string e) => MockHelper.Throw();
+        public async Task NavigateToAddressAsync(string e)
+        {
+            await Task.Yield();
+            MockHelper.Throw();
+        }
 
         public void Upload(IStorageFile file) => MockHelper.Throw();
 

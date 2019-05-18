@@ -41,6 +41,7 @@ namespace FourSeafile.ViewModel.Mock
 
         protected override async Task LoadAsync()
         {
+            await Task.Yield();
             App.LibCache = new Dictionary<string, SeafClient.Types.SeafLibrary>
             {
                 { "1", new SeafClient.Types.SeafLibrary { Id = "1", Name = "Test", Timestamp = DateTime.Now } },

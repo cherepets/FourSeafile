@@ -7,7 +7,7 @@ namespace FourSeafile.Viewers
 {
     public class DefaultViewer : IViewer
     {
-        public async Task<bool> CanClose() => true;
+        public Task<bool> CanClose() => Task.FromResult(true);
 
         public async void Open(IFileViewModel fileVM)
         {
