@@ -9,7 +9,6 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <uc:StatusBarController x:Name="StatusBar" />
         <uc:GridView x:Name="GridView" ItemsSource="{Binding Files}" AllowDrop="True" DesiredItemSize="260"
                      Drop="GridView_Drop" DragOver="GridView_DragOver">
             <uc:GridView.ItemTemplate>

@@ -75,15 +75,7 @@ namespace FourSeafile.UserControls
 
         private async void OnClick()
         {
-            var fvm = FileVM;
-            if (fvm.IsFile)
-                StatusBar.Text = $"{FileVM.Name} {Localization.IsDownloading}...";
             Click?.Invoke(this, null);
-            if (fvm.IsFile)
-            {
-                await Task.Delay(1000);
-                StatusBar.Text = null;
-            }
         }
 
         private static async Task<StorageFolder> PickFolderAsync(string ext)

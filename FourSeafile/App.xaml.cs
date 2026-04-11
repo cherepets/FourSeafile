@@ -60,7 +60,7 @@ namespace FourSeafile
             Frame.Navigate(typeof(MainPage));
         }
 
-        private static void Current_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void Current_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
             HandleException(e.Exception);

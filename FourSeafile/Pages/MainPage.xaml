@@ -3,15 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:uc="using:FourSeafile.UserControls"
-    NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Required"
     SizeChanged="Page_SizeChanged">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="LeftColumn" />
             <ColumnDefinition x:Name="RightColumn" />
         </Grid.ColumnDefinitions>
-        <uc:StatusBarController x:Name="StatusBar" BackgroundOpacity="1" />
         <Grid x:Name="SplitPane">
             <Grid.RenderTransform>
                 <CompositeTransform />
@@ -23,21 +22,38 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <ListViewItem Tapped="Burger_Tapped">
-                <StackPanel Orientation="Horizontal" Margin="-12, 0">
-                    <FontIcon Glyph="" FontFamily="Segoe MDL2 Assets" Width="50" Height="48"/>
-                    <TextBlock Text="FOURSEAFILE" FontWeight="Bold" VerticalAlignment="Center" />
+                <StackPanel Margin="-12,0" Orientation="Horizontal">
+                    <FontIcon
+                        Width="50"
+                        Height="48"
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="FOURSEAFILE" />
                 </StackPanel>
             </ListViewItem>
             <uc:UserInfo Grid.Row="1" DataContext="{Binding UserInfo}" />
-            <uc:Progress x:Name="Progress" Grid.Row="2" DataContext="{Binding Progress}" />
+            <uc:Progress
+                x:Name="Progress"
+                Grid.Row="2"
+                DataContext="{Binding Progress}" />
             <ListViewItem Grid.Row="3" Tapped="Logout_Tapped">
-                <StackPanel Orientation="Horizontal" Margin="-12, 0">
-                    <FontIcon Glyph="" FontFamily="Segoe MDL2 Assets" Width="50" Height="48"/>
+                <StackPanel Margin="-12,0" Orientation="Horizontal">
+                    <FontIcon
+                        Width="50"
+                        Height="48"
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="" />
                     <TextBlock x:Uid="LogoutBlock" VerticalAlignment="Center" />
                 </StackPanel>
             </ListViewItem>
         </Grid>
-        <Grid x:Name="SplitContent" DataContext="{Binding FileBrowser}" Grid.Column="1">
+        <Grid
+            x:Name="SplitContent"
+            Grid.Column="1"
+            DataContext="{Binding FileBrowser}">
             <Grid.RenderTransform>
                 <CompositeTransform />
             </Grid.RenderTransform>
@@ -49,29 +65,34 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <uc:FileBrowser Grid.ColumnSpan="2" Grid.Row="1" />
-            <AppBarButton x:Name="CompactBurger" IsCompact="True" Width="50" Height="50" Click="CompactBurger_Click">
+            <uc:FileBrowser Grid.Row="1" Grid.ColumnSpan="2" />
+            <AppBarButton
+                x:Name="CompactBurger"
+                Width="50"
+                Height="50"
+                Click="CompactBurger_Click"
+                IsCompact="True">
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="" FontFamily="Segoe MDL2 Assets" />
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <uc:AddressBar Address="{Binding Address}" Grid.Column="1"
-                           UserInput="AddressBar_UserInput"
-                           RootRequested="AddressBar_RootRequested" />
+            <uc:AddressBar
+                Grid.Column="1"
+                Address="{Binding Address}"
+                RootRequested="AddressBar_RootRequested"
+                UserInput="AddressBar_UserInput" />
         </Grid>
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ViewStates">
                 <VisualState x:Name="TwoPanes">
                     <VisualState.Setters>
-                        <Setter Target="StatusBar.Hidden" Value="true" />
                         <Setter Target="CompactBurger.Visibility" Value="Collapsed" />
                         <Setter Target="LeftColumn.Width" Value="Auto" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="TwoPanesCompact">
                     <VisualState.Setters>
-                        <Setter Target="StatusBar.Hidden" Value="true" />
                         <Setter Target="CompactBurger.Visibility" Value="Collapsed" />
                         <Setter Target="LeftColumn.Width" Value="50" />
                     </VisualState.Setters>
@@ -82,9 +103,9 @@
                         <Setter Target="SplitContent.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                     <Storyboard>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SplitPane">
-                            <LinearDoubleKeyFrame KeyTime="0" Value="-360"/>
-                            <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SplitPane" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)">
+                            <LinearDoubleKeyFrame KeyTime="0" Value="-360" />
+                            <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
@@ -94,9 +115,9 @@
                         <Setter Target="SplitPane.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                     <Storyboard>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SplitContent">
-                            <LinearDoubleKeyFrame KeyTime="0" Value="1000"/>
-                            <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SplitContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)">
+                            <LinearDoubleKeyFrame KeyTime="0" Value="1000" />
+                            <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>

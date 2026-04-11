@@ -6,7 +6,6 @@
     xmlns:uc="using:FourSeafile.UserControls"
     Loaded="Page_Loaded">
     <Grid>
-        <uc:StatusBarController BackgroundOpacity="1" />
         <ProgressRing Width="96" Height="96" IsActive="True" 
                       HorizontalAlignment="Center" VerticalAlignment="Center" 
                       Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" />

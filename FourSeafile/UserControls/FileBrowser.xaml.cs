@@ -58,10 +58,8 @@ namespace FourSeafile.UserControls
             picker.FileTypeFilter.Add("*");
             var file = await picker.PickSingleFileAsync();
             if (file == null) return;
-            StatusBar.Text = $"{file.Name} {Localization.IsUploading}...";
             BrowserVM.Upload(file);
             await Task.Delay(1000);
-            StatusBar.Text = null;
         }
 
         private async void GridView_Drop(object sender, DragEventArgs e)

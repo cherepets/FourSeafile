@@ -8,13 +8,12 @@ namespace FourSeafile.Extensions
     public static class PageExt
     {
         private static EventHandler<BackRequestedEventArgs> _desktopHandler;
-        private static EventHandler<BackPressedEventArgs> _mobileHandler;
         private static Action _action;
         private static Action _stash;
         private static readonly object Lock = new object();
 
 
-        public static bool BackHandlerAttached => _desktopHandler != null || _mobileHandler != null;
+        public static bool BackHandlerAttached => _desktopHandler != null;
 
         public static void AttachBackHandler(this Page page, Action action)
         {
@@ -34,14 +33,6 @@ namespace FourSeafile.Extensions
                         };
                         navigationManager.BackRequested += _desktopHandler;
                         return;
-                    case Platform.Mobile:
-                        _mobileHandler = (s, e) =>
-                        {
-                            _action.Invoke();
-                            e.Handled = true;
-                        };
-                        HardwareButtons.BackPressed += _mobileHandler;
-                        return;
                 }
             }
         }
@@ -56,10 +47,6 @@ namespace FourSeafile.Extensions
                     navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     navigationManager.BackRequested -= _desktopHandler;
                     _desktopHandler = null;
-                    return;
-                case Platform.Mobile:
-                    HardwareButtons.BackPressed -= _mobileHandler;
-                    _mobileHandler = null;
                     return;
             }
         }
