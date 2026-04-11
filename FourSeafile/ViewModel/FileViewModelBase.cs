@@ -20,6 +20,6 @@ namespace FourSeafile.ViewModel
         public async Task RefreshContentAsync() => await LoadAsync();
         public async void RefreshContent() => await RefreshContentAsync();
 
-        public override string ToString() => $"{App.LibCache[LibId]}/../{Name}";
+        public override string ToString() => $"{App.LibCache[LibId].Name}/{Name}";
     }
 }

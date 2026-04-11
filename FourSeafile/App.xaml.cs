@@ -119,7 +119,6 @@ namespace FourSeafile
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Localization.Apply();
-            ChangeNameBarColor();
             var clearTask = ApplicationData.Current.TemporaryFolder.ClearAsync();
             Frame = Window.Current.Content as Frame;
             if (Frame == null)
@@ -136,29 +135,6 @@ namespace FourSeafile
                 }
             }
             await clearTask;
-        }
-        private void ChangeNameBarColor()
-        {
-            if (!Platform.IsDesktop) return;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            if (Resources["SystemControlBackgroundAccentBrush"] is SolidColorBrush accentBrush)
-            {
-                var accent = accentBrush.Color;
-                var light = accent.Lighten();
-                var dark = accent.Darken();
-                titleBar.BackgroundColor = accent;
-                titleBar.ForegroundColor = Colors.Black;
-                titleBar.ButtonBackgroundColor = accent;
-                titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverBackgroundColor = dark;
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = light;
-                titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveBackgroundColor = accent;
-                titleBar.ButtonInactiveForegroundColor = Colors.Black;
-                titleBar.InactiveBackgroundColor = dark;
-            }
-            titleBar.InactiveForegroundColor = Colors.Black;
         }
     }
 }

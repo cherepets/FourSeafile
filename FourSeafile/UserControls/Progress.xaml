@@ -8,18 +8,22 @@
             <ColumnDefinition Width="50" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Height="50"
-              VerticalAlignment="Bottom"
-              RenderTransformOrigin="0,0">
+        <Grid
+            Height="50"
+            VerticalAlignment="Bottom"
+            RenderTransformOrigin="0,0">
             <Grid.RenderTransform>
                 <RotateTransform Angle="-90" />
             </Grid.RenderTransform>
-            <TextBlock Text="{Binding Stats}"
-                       VerticalAlignment="Center"
-                       FontWeight="Bold">
-            </TextBlock>
+            <TextBlock
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Text="{Binding Stats}" />
         </Grid>
-        <uc:GridView ItemsSource="{Binding NetworkOperations}" DesiredItemSize="720" Grid.Column="1">
+        <uc:GridView
+            Grid.Column="1"
+            DesiredItemSize="720"
+            ItemsSource="{Binding NetworkOperations}">
             <uc:GridView.ItemsPanel>
                 <DataTemplate>
                     <StackPanel />
@@ -29,7 +33,7 @@
                 <DataTemplate>
                     <StackPanel Margin="12">
                         <TextBlock Text="{Binding Text}" TextTrimming="CharacterEllipsis" />
-                        <ProgressBar Value="{Binding Value}" Maximum="{Binding Total}" />
+                        <ProgressBar Maximum="{Binding Total}" Value="{Binding Value}" />
                     </StackPanel>
                 </DataTemplate>
             </uc:GridView.ItemTemplate>

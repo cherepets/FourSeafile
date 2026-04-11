@@ -11,8 +11,14 @@
             <CommandBar.Content>
                 <TextBlock x:Name="Header" Margin="12" />
             </CommandBar.Content>
-            <AppBarButton x:Uid="SaveLocalButton" Icon="SaveLocal" Click="SaveLocal_Click" />
+            <AppBarButton
+                x:Uid="SaveLocalButton"
+                Click="SaveLocal_Click"
+                Icon="SaveLocal" />
         </CommandBar>
-        <FlipView x:Name="FlipView" Grid.Row="1" SelectionChanged="FlipView_SelectionChanged" />
+        <FlipView
+            x:Name="FlipView"
+            Grid.Row="1"
+            SelectionChanged="FlipView_SelectionChanged" />
     </Grid>
 </UserControl>

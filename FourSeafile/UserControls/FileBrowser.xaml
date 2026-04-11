@@ -2,34 +2,59 @@
     x:Class="FourSeafile.UserControls.FileBrowser"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:uc="using:FourSeafile.UserControls" 
+    xmlns:uc="using:FourSeafile.UserControls"
     IsEnabled="{Binding SelectedFolder.IsLoaded}">
     <Grid x:Name="Root" DataContext="{Binding SelectedFolder}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <uc:GridView x:Name="GridView" ItemsSource="{Binding Files}" AllowDrop="True" DesiredItemSize="260"
-                     Drop="GridView_Drop" DragOver="GridView_DragOver">
+        <uc:GridView
+            x:Name="GridView"
+            AllowDrop="True"
+            DesiredItemSize="260"
+            DragOver="GridView_DragOver"
+            Drop="GridView_Drop"
+            ItemsSource="{Binding Files}">
             <uc:GridView.ItemTemplate>
                 <DataTemplate>
-                    <uc:FileIconView AllowDrop="True" CanDrag="{Binding IsFile}"
-                                     Click="FileIconView_Click" 
-                                     Drop="FileIconView_Drop" 
-                                     DragOver="FileIconView_DragOver" 
-                                     DragStarting="FileIconView_DragStarting"/>
+                    <uc:FileIconView
+                        AllowDrop="True"
+                        CanDrag="{Binding IsFile}"
+                        Click="FileIconView_Click"
+                        DragOver="FileIconView_DragOver"
+                        DragStarting="FileIconView_DragStarting"
+                        Drop="FileIconView_Drop" />
                 </DataTemplate>
             </uc:GridView.ItemTemplate>
         </uc:GridView>
-        <CommandBar Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentBrush}">
-            <AppBarButton x:Uid="RefeshButton" Icon="Refresh" Click="Refresh_Click" />
-            <AppBarButton x:Uid="GoUpButton" Icon="Up" IsEnabled="{Binding CanGoUp}" Click="Up_Click" />
-            <AppBarButton x:Uid="UploadButton" Icon="Add" IsEnabled="{Binding CanUpload}" Click="Upload_Click" />
+        <CommandBar Grid.Row="1">
+            <AppBarButton
+                x:Uid="RefeshButton"
+                Click="Refresh_Click"
+                Icon="Refresh" />
+            <AppBarButton
+                x:Uid="GoUpButton"
+                Click="Up_Click"
+                Icon="Up"
+                IsEnabled="{Binding CanGoUp}" />
+            <AppBarButton
+                x:Uid="UploadButton"
+                Click="Upload_Click"
+                Icon="Add"
+                IsEnabled="{Binding CanUpload}" />
         </CommandBar>
-        <Grid Grid.RowSpan="2" Background="{ThemeResource SystemControlDisabledListMediumBrush}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}">
-            <ProgressRing Width="96" Height="96" IsActive="True" 
-                      HorizontalAlignment="Center" VerticalAlignment="Center" 
-                      Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" />
+        <Grid
+            Grid.RowSpan="2"
+            Background="{ThemeResource SystemControlDisabledListMediumBrush}"
+            Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}">
+            <ProgressRing
+                Width="96"
+                Height="96"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}"
+                IsActive="True" />
         </Grid>
     </Grid>
 </UserControl>

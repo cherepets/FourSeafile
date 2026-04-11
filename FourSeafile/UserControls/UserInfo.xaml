@@ -12,23 +12,46 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Ellipse Width="38" Height="38" Margin="6">
+        <Ellipse
+            Width="38"
+            Height="38"
+            Margin="6">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="{Binding Avatar}" />
             </Ellipse.Fill>
         </Ellipse>
-        <TextBlock Text="{Binding Nickname}" Margin="0,12,12,12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" MaxWidth="310" />
-        <Grid Width="100" Height="100" Grid.Column="1" Grid.Row="1" Margin="12">
+        <TextBlock
+            Grid.Column="1"
+            MaxWidth="310"
+            Margin="0,12,12,12"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Nickname}"
+            TextTrimming="CharacterEllipsis" />
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="100"
+            Height="100"
+            Margin="12">
             <c:DoughnutChart ItemsSource="{Binding UsageData}">
                 <c:DoughnutChart.ItemTemplate>
                     <DataTemplate>
-                        <c:DoughnutChartItem Value="{Binding Part}" Color="{Binding Color}"/>
+                        <c:DoughnutChartItem Color="{Binding Color}" Value="{Binding Part}" />
                     </DataTemplate>
                 </c:DoughnutChart.ItemTemplate>
             </c:DoughnutChart>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding UsedSpace}" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" FontWeight="Bold" HorizontalAlignment="Center" />
-                <TextBlock Text="{Binding TotalSpace}" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" FontWeight="Bold" HorizontalAlignment="Center" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                    Text="{Binding UsedSpace}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                    Text="{Binding TotalSpace}" />
             </StackPanel>
         </Grid>
     </Grid>

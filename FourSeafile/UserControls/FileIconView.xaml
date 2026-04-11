@@ -8,30 +8,45 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Rectangle x:Name="SelectionFrame" Grid.ColumnSpan="2"
+        <Rectangle
+            x:Name="SelectionFrame"
+            Grid.ColumnSpan="2"
             Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}"
             StrokeThickness="1"
             Visibility="Collapsed" />
-        <Rectangle x:Name="Overlay" Grid.ColumnSpan="2"
-                   Opacity="0.25"
-                   Fill="{ThemeResource SystemControlBackgroundAccentBrush}"
-                   Visibility="Collapsed"  />
-        <FontIcon Glyph="{Binding Icon.Glyph}" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12" />
-        <StackPanel Margin="0,12" Grid.Column="1">
+        <Rectangle
+            x:Name="Overlay"
+            Grid.ColumnSpan="2"
+            Fill="{ThemeResource SystemControlBackgroundAccentBrush}"
+            Opacity="0.25"
+            Visibility="Collapsed" />
+        <FontIcon
+            Margin="12"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="48"
+            Glyph="{Binding Icon.Glyph}" />
+        <StackPanel Grid.Column="1" Margin="0,12">
             <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
             <TextBlock Text="{Binding Info}" />
         </StackPanel>
-        <!-- Context Menu-->
+        <!--  Context Menu  -->
         <FlyoutBase.AttachedFlyout>
             <MenuFlyout>
-                <MenuFlyoutItem x:Name="OpenButton" x:Uid="OpenButton"
-                                Visibility="{Binding IsFile, Converter={StaticResource BoolToVisibility}}"
-                                Click="OpenButton_Click"/>
-                <MenuFlyoutItem x:Name="DownloadButton" x:Uid="DownloadButton"
-                                Visibility="{Binding IsFile, Converter={StaticResource BoolToVisibility}}"
-                                Click="DownloadButton_Click"/>
-                <MenuFlyoutItem x:Name="DeleteButton" x:Uid="DeleteButton"
-                                Click="DeleteButton_Click"/>
+                <MenuFlyoutItem
+                    x:Name="OpenButton"
+                    x:Uid="OpenButton"
+                    Click="OpenButton_Click"
+                    Visibility="{Binding IsFile, Converter={StaticResource BoolToVisibility}}" />
+                <MenuFlyoutItem
+                    x:Name="DownloadButton"
+                    x:Uid="DownloadButton"
+                    Click="DownloadButton_Click"
+                    Visibility="{Binding IsFile, Converter={StaticResource BoolToVisibility}}" />
+                <MenuFlyoutItem
+                    x:Name="DeleteButton"
+                    x:Uid="DeleteButton"
+                    Click="DeleteButton_Click" />
             </MenuFlyout>
         </FlyoutBase.AttachedFlyout>
     </Grid>
