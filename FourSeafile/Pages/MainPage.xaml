@@ -25,9 +25,8 @@
             <ListViewItem Tapped="Burger_Tapped">
                 <StackPanel Margin="-12,0" Orientation="Horizontal">
                     <FontIcon
-                        Width="50"
+                        Width="48"
                         Height="48"
-                        FontFamily="Segoe MDL2 Assets"
                         Glyph="" />
                     <TextBlock
                         VerticalAlignment="Center"
@@ -43,9 +42,8 @@
             <ListViewItem Grid.Row="3" Tapped="Logout_Tapped">
                 <StackPanel Margin="-12,0" Orientation="Horizontal">
                     <FontIcon
-                        Width="50"
+                        Width="48"
                         Height="48"
-                        FontFamily="Segoe MDL2 Assets"
                         Glyph="" />
                     <TextBlock x:Uid="LogoutBlock" VerticalAlignment="Center" />
                 </StackPanel>
@@ -54,7 +52,6 @@
         <Grid
             x:Name="SplitContent"
             Grid.Column="1"
-            Margin="16,0,0,0"
             DataContext="{Binding FileBrowser}">
             <Grid.RenderTransform>
                 <CompositeTransform />
@@ -68,18 +65,18 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <uc:FileBrowser Grid.Row="1" Grid.ColumnSpan="2" />
-            <AppBarButton
+            <Button
                 x:Name="CompactBurger"
-                Width="50"
-                Height="50"
-                Click="CompactBurger_Click"
-                IsCompact="True">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+                Width="36"
+                Height="36"
+                Margin="8,0,0,0"
+                Padding="0"
+                Click="CompactBurger_Click">
+                <FontIcon Glyph="" />
+            </Button>
             <uc:AddressBar
                 Grid.Column="1"
+                Margin="8,0,0,0"
                 Address="{Binding Address}"
                 RootRequested="AddressBar_RootRequested"
                 UserInput="AddressBar_UserInput" />
